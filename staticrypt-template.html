@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="staticrypt-html" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>/*[|template_title|]*/0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg:#000000;
+            --surface:#16161E;
+            --surface-2:#1F1F2A;
+            --border:rgba(255,255,255,0.10);
+            --border-2:rgba(255,255,255,0.18);
+            --border-brand:rgba(246,51,162,0.50);
+            --text:#FFFFFF;
+            --text-2:rgba(255,255,255,0.80);
+            --text-3:rgba(255,255,255,0.55);
+            --text-muted:rgba(255,255,255,0.38);
+            --magenta:#F633A2;
+            --grad:linear-gradient(90deg, #995FF8 0%, #F633A2 30%, #FF0342 60%, #FF8A00 100%);
+        }
+        *,*::before,*::after{box-sizing:border-box}
+        html,body{margin:0;padding:0;height:100%}
+        .staticrypt-html{height:100%}
+        .staticrypt-body{
+            min-height:100%;margin:0;
+            font-family:'Onest','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            color:var(--text);
+            background:
+                radial-gradient(900px 600px at 80% -10%, rgba(246,51,162,.16), transparent 60%),
+                radial-gradient(700px 500px at 10% 110%, rgba(153,95,248,.14), transparent 60%),
+                #000;
+            -webkit-font-smoothing:antialiased;
+            text-rendering:optimizeLegibility;
+            display:flex;align-items:center;justify-content:center;
+            padding:40px 24px;
+        }
+
+        .hidden{display:none !important}
+
+        /* Loading spinner */
+        .staticrypt-spinner-container{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;z-index:100}
+        .staticrypt-spinner{
+            width:32px;height:32px;border-radius:50%;
+            border:2px solid rgba(246,51,162,.2);
+            border-top-color:var(--magenta);
+            animation:staticrypt-spin .8s linear infinite;
+        }
+        @keyframes staticrypt-spin{to{transform:rotate(360deg)}}
+
+        /* Page layout */
+        .staticrypt-content{width:100%;max-width:440px}
+        .staticrypt-page{margin:0;padding:0;width:100%}
+
+        /* Brand top */
+        .lua-brand{
+            display:flex;align-items:center;justify-content:center;gap:14px;
+            margin-bottom:36px;color:var(--text-3);
+            font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;
+        }
+        .lua-brand img{
+            width:42px;height:42px;display:block;
+            filter:drop-shadow(0 0 18px rgba(246,51,162,.45));
+        }
+
+        /* Card */
+        .staticrypt-form{
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:12px;
+            padding:36px;
+            text-align:left;
+            position:relative;
+            overflow:hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 24px 60px rgba(0,0,0,.5), 0 0 80px rgba(246,51,162,.06);
+        }
+        .staticrypt-form::before{
+            content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);
+        }
+
+        .staticrypt-instructions{margin-bottom:24px}
+        .staticrypt-title{
+            font-family:'Onest',sans-serif;
+            font-size:24px;font-weight:600;letter-spacing:-.022em;line-height:1.15;
+            color:var(--text);margin:0 0 10px;
+        }
+        .staticrypt-instructions p:not(.staticrypt-title){
+            font-size:13.5px;color:var(--text-3);line-height:1.55;margin:0;
+        }
+
+        .staticrypt-hr{display:none}
+
+        /* Input */
+        .staticrypt-password-container{
+            position:relative;
+            margin:0 0 14px;
+            background:var(--surface-2);
+            border:1px solid var(--border-2);
+            border-radius:8px;
+            transition:border-color .2s ease, box-shadow .2s ease;
+        }
+        .staticrypt-password-container:focus-within{
+            border-color:var(--border-brand);
+            box-shadow:0 0 0 3px rgba(246,51,162,.12);
+        }
+        .staticrypt-form input[type="password"],
+        .staticrypt-form input[type="text"]{
+            background:transparent;
+            border:0;outline:0;
+            font-family:'Onest',sans-serif;
+            font-size:15px;font-weight:500;
+            color:var(--text);
+            padding:14px 44px 14px 16px;
+            width:100%;
+            letter-spacing:.02em;
+        }
+        .staticrypt-form input::placeholder{color:var(--text-muted);font-weight:400}
+
+        /* Eye icon */
+        .staticrypt-toggle-password-visibility{
+            cursor:pointer;
+            height:18px;width:18px;
+            padding:14px;
+            position:absolute;right:0;top:50%;
+            transform:translateY(-50%);
+            opacity:.55;
+            filter:invert(1);
+            transition:opacity .15s ease;
+        }
+        .staticrypt-toggle-password-visibility:hover{opacity:.85}
+
+        /* Remember me */
+        .staticrypt-remember{
+            display:flex !important;
+            align-items:center;gap:9px;
+            font-size:12.5px;color:var(--text-3);
+            margin:10px 0 18px;
+            cursor:pointer;
+            user-select:none;
+        }
+        .staticrypt-remember.hidden{display:none !important}
+        .staticrypt-remember input[type="checkbox"]{
+            accent-color:var(--magenta);
+            width:14px;height:14px;margin:0;cursor:pointer;
+        }
+
+        /* Decrypt button */
+        .staticrypt-form .staticrypt-decrypt-button{
+            display:block;
+            width:100%;
+            padding:14px 20px;
+            border:0;outline:0;
+            background:var(--grad);
+            background-size:200% 100%;
+            background-position:0% 50%;
+            color:#0A0A0E;
+            font-family:'Onest',sans-serif;
+            font-size:13px;font-weight:700;
+            letter-spacing:.16em;text-transform:uppercase;
+            border-radius:8px;
+            cursor:pointer;
+            transition:background-position .35s ease, transform .15s ease, box-shadow .25s ease;
+            box-shadow:0 6px 20px rgba(246,51,162,.18);
+        }
+        .staticrypt-form .staticrypt-decrypt-button:hover,
+        .staticrypt-form .staticrypt-decrypt-button:focus{
+            background-position:100% 50%;
+            box-shadow:0 8px 28px rgba(246,51,162,.32);
+        }
+        .staticrypt-form .staticrypt-decrypt-button:active{
+            transform:translateY(1px);
+        }
+
+        /* Footer below card */
+        .lua-foot{
+            margin-top:24px;text-align:center;
+            font-family:'JetBrains Mono',monospace;
+            font-size:10.5px;color:var(--text-muted);
+            letter-spacing:.14em;
+        }
+        .lua-foot strong{color:var(--text-3);font-weight:600}
+
+        /* Print: just show the password prompt as-is */
+        @media print{
+            .staticrypt-body{background:#fff;color:#000}
+        }
+
+        @media (max-width:520px){
+            .staticrypt-form{padding:28px 22px}
+            .staticrypt-title{font-size:21px}
+        }
+    </style>
+</head>
+
+<body class="staticrypt-body">
+    <div id="staticrypt_loading" class="staticrypt-spinner-container">
+        <div class="staticrypt-spinner"></div>
+    </div>
+
+    <div id="staticrypt_content" class="staticrypt-content hidden">
+        <div class="staticrypt-page">
+
+            <div class="lua-brand">
+                <img src="logo.png" alt="Lua"/>
+                <span>Lua · Madinet Masr</span>
+            </div>
+
+            <div class="staticrypt-form">
+                <div class="staticrypt-instructions">
+                    <p class="staticrypt-title">/*[|template_title|]*/0</p>
+                    <p>/*[|template_instructions|]*/0</p>
+                </div>
+
+                <hr class="staticrypt-hr" />
+
+                <form id="staticrypt-form" action="#" method="post">
+                    <div class="staticrypt-password-container">
+                        <input
+                            id="staticrypt-password"
+                            type="password"
+                            name="password"
+                            placeholder="/*[|template_placeholder|]*/0"
+                            autofocus
+                            autocomplete="off"
+                        />
+                        <img
+                            class="staticrypt-toggle-password-visibility"
+                            alt="/*[|template_toggle_show|]*/0"
+                            title="/*[|template_toggle_show|]*/0"
+                            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48cGF0aCBkPSJNMzguOCA1LjFDMjguNC0zLjEgMTMuMy0xLjIgNS4xIDkuMlMtMS4yIDM0LjcgOS4yIDQyLjlsNTkyIDQ2NGMxMC40IDguMiAyNS41IDYuMyAzMy43LTQuMXM2LjMtMjUuNS00LjEtMzMuN0w1MjUuNiAzODYuN2MzOS42LTQwLjYgNjYuNC04Ni4xIDc5LjktMTE4LjRjMy4zLTcuOSAzLjMtMTYuNyAwLTI0LjZjLTE0LjktMzUuNy00Ni4yLTg3LjctOTMtMTMxLjFDNDY1LjUgNjguOCA0MDAuOCAzMiAzMjAgMzJjLTY4LjIgMC0xMjUgMjYuMy0xNjkuMyA2MC44TDM4LjggNS4xek0yMjMuMSAxNDkuNUMyNDguNiAxMjYuMiAyODIuNyAxMTIgMzIwIDExMmM3OS41IDAgMTQ0IDY0LjUgMTQ0IDE0NGMwIDI0LjktNi4zIDQ4LjMtMTcuNCA2OC43TDQwOCAyOTQuNWM4LjQtMTkuMyAxMC42LTQxLjQgNC44LTYzLjNjLTExLjEtNDEuNS00Ny44LTY5LjQtODguNi03MS4xYy01LjgtLjItOS4yIDYuMS03LjQgMTEuN2MyLjEgNi40IDMuMyAxMy4yIDMuMyAyMC4zYzAgMTAuMi0yLjQgMTkuOC02LjYgMjguM2wtOTAuMy03MC44ek0zNzMgMzg5LjljLTE2LjQgNi41LTM0LjMgMTAuMS01MyAxMC4xYy03OS41IDAtMTQ0LTY0LjUtMTQ0LTE0NGMwLTYuOSAuNS0xMy42IDEuNC0yMC4yTDgzLjEgMTYxLjVDNjAuMyAxOTEuMiA0NCAyMjAuOCAzNC41IDI0My43Yy0zLjMgNy45LTMuMyAxNi43IDAgMjQuNmMxNC45IDM1LjcgNDYuMiA4Ny43IDkzIDEzMS4xQzE3NC41IDQ0My4yIDIzOS4yIDQ4MCAzMjAgNDgwYzQ3LjggMCA4OS45LTEyLjkgMTI2LjItMzIuNUwzNzMgMzg5Ljl6Ii8+PC9zdmc+"
+                        />
+                    </div>
+
+                    <label id="staticrypt-remember-label" class="staticrypt-remember hidden">
+                        <input id="staticrypt-remember" type="checkbox" name="remember" />
+                        /*[|template_remember|]*/0
+                    </label>
+
+                    <input type="submit" class="staticrypt-decrypt-button" value="/*[|template_button|]*/0" />
+                </form>
+            </div>
+
+            <div class="lua-foot">CONFIDENTIAL · <strong>LUA · 2026</strong></div>
+
+        </div>
+    </div>
+
+    <script>
+        const staticryptInitiator = /*[|js_staticrypt|]*/ 0;
+        const templateError = "/*[|template_error|]*/0",
+            templateToggleAltShow = "/*[|template_toggle_show|]*/0",
+            templateToggleAltHide = "/*[|template_toggle_hide|]*/0",
+            isRememberEnabled = /*[|is_remember_enabled|]*/ 0,
+            staticryptConfig = /*[|staticrypt_config|]*/ 0;
+
+        const templateConfig = {
+            rememberExpirationKey: "staticrypt_expiration",
+            rememberPassphraseKey: "staticrypt_passphrase",
+            replaceHtmlCallback: null,
+            clearLocalStorageCallback: null,
+        };
+
+        const staticrypt = staticryptInitiator.init(staticryptConfig, templateConfig);
+
+        window.onload = async function () {
+            const { isSuccessful } = await staticrypt.handleDecryptOnLoad();
+            if (!isSuccessful) {
+                document.getElementById("staticrypt_loading").classList.add("hidden");
+                document.getElementById("staticrypt_content").classList.remove("hidden");
+                document.getElementById("staticrypt-password").focus();
+                if (isRememberEnabled) {
+                    document.getElementById("staticrypt-remember-label").classList.remove("hidden");
+                }
+            }
+        };
+
+        // toggle password visibility
+        const toggleIcon = document.querySelector(".staticrypt-toggle-password-visibility");
+        if (toggleIcon) {
+            toggleIcon.addEventListener("click", function () {
+                const passwordInput = document.getElementById("staticrypt-password");
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    toggleIcon.alt = templateToggleAltHide;
+                    toggleIcon.title = templateToggleAltHide;
+                } else {
+                    passwordInput.type = "password";
+                    toggleIcon.alt = templateToggleAltShow;
+                    toggleIcon.title = templateToggleAltShow;
+                }
+            });
+        }
+
+        // surface decryption errors inside the brand card
+        document.getElementById("staticrypt-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const password = document.getElementById("staticrypt-password").value;
+            const isRemember = document.getElementById("staticrypt-remember") && document.getElementById("staticrypt-remember").checked;
+            const { isSuccessful } = await staticrypt.handleDecryptionOfPage(password, isRemember);
+            if (!isSuccessful) {
+                const container = document.querySelector(".staticrypt-password-container");
+                container.style.borderColor = "#FF0342";
+                container.style.boxShadow = "0 0 0 3px rgba(255,3,66,.15)";
+                const existing = document.querySelector(".lua-error-msg");
+                if (existing) existing.remove();
+                const msg = document.createElement("div");
+                msg.className = "lua-error-msg";
+                msg.style.cssText = "color:#FF7A98;font-size:12.5px;margin:-6px 0 12px;padding:0;letter-spacing:.02em";
+                msg.textContent = templateError;
+                container.parentNode.insertBefore(msg, container.nextSibling);
+                document.getElementById("staticrypt-password").focus();
+                document.getElementById("staticrypt-password").select();
+            }
+        });
+    </script>
+</body>
+</html>

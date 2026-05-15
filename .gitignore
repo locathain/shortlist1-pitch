@@ -1,0 +1,18 @@
+.DS_Store
+.claude/
+*.swp
+.idea/
+.vscode/
+
+# Unencrypted source — must NEVER be committed.
+# Edits happen on src/index.html locally; staticrypt produces the
+# encrypted root index.html that is committed.
+src/
+
+# Backups
+*.bak
+*.orig
+
+# Node (if anyone npm-installs staticrypt locally)
+node_modules/
+package-lock.json

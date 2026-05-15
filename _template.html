@@ -1,0 +1,2176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet" />
+<title>[CLIENT_NAME] · One Question. Every System. — Presentation Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000000;
+    --bg-1:#0A0A0E;
+    --bg-2:#14141A;
+    --surface:#16161E;
+    --surface-2:#1F1F2A;
+    --surface-3:#2A2A38;
+    --border:rgba(255,255,255,0.08);
+    --border-2:rgba(255,255,255,0.14);
+    --border-brand:rgba(246,51,162,0.40);
+
+    --text:#FFFFFF;
+    --text-2:rgba(255,255,255,0.80);
+    --text-3:rgba(255,255,255,0.58);
+    --text-muted:rgba(255,255,255,0.40);
+
+    --purple:#995FF8;
+    --magenta:#F633A2;
+    --red:#FF0342;
+    --orange:#FF8A00;
+    --cream:#FFC474;
+
+    --grad:linear-gradient(90deg, #995FF8 0%, #F633A2 30%, #FF0342 60%, #FF8A00 100%);
+    --grad-r:linear-gradient(90deg, #F633A2 0%, #FF0342 50%, #FF8A00 100%);
+    --grad-soft:linear-gradient(90deg, rgba(153,95,248,.14), rgba(246,51,162,.14), rgba(255,138,0,.14));
+    --grad-line:linear-gradient(90deg, transparent, #F633A2, transparent);
+
+    --ok:#00C896;
+    --critical:#FF0342;
+
+    --gap-1:8px; --gap-2:14px; --gap-3:20px; --gap-4:28px; --gap-5:40px; --gap-6:56px;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 40px rgba(0,0,0,.5);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#000}
+  body{
+    font-family:'Onest','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    font-feature-settings:"ss01","ss02","cv01";
+  }
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-feature-settings:"zero","calt"}
+
+  h1,h2,h3,h4{font-family:'Onest',sans-serif;font-weight:600;color:var(--text);margin:0;letter-spacing:-.022em;line-height:1.05}
+  h1{font-size:clamp(56px,8vw,128px);letter-spacing:-.038em;font-weight:700;line-height:1}
+  h2{font-size:clamp(36px,4.4vw,64px);letter-spacing:-.028em;font-weight:600}
+  h3{font-size:clamp(22px,2.2vw,32px);letter-spacing:-.018em;font-weight:600}
+  h4{font-size:clamp(17px,1.4vw,22px);letter-spacing:-.012em;font-weight:600}
+  p{margin:0 0 12px 0;color:var(--text-2);font-size:clamp(14px,1.02vw,17px);line-height:1.55;font-weight:400}
+  em{font-style:italic;color:var(--text)}
+  strong{color:var(--text);font-weight:600}
+
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .grad-line{height:2px;width:64px;background:var(--grad);border:0;border-radius:2px;margin:0 0 22px 0}
+
+  /* Deck mechanics */
+  .deck{position:fixed;inset:0;background:var(--bg);overflow:hidden}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:48px 72px 80px;opacity:0;pointer-events:none;transform:translateX(24px);transition:opacity .4s ease, transform .4s ease;background:var(--bg);overflow:hidden}
+  .slide.active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+  .slide.prev{transform:translateX(-24px)}
+
+  .chrome{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:500;z-index:50;pointer-events:none}
+  .chrome .brandmini{display:flex;align-items:center;gap:12px;color:var(--text-3)}
+  .chrome .brandmini img{width:18px;height:18px;display:block}
+  .chrome .count{font-family:'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--text-3)}
+  .progress{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:60;pointer-events:none}
+  .progress .bar{height:100%;background:var(--grad);transition:width .4s ease;box-shadow:0 0 12px rgba(246,51,162,.5)}
+
+  .nav-zone{position:fixed;top:0;bottom:0;width:18%;z-index:40;cursor:pointer}
+  .nav-zone.left{left:0}
+  .nav-zone.right{right:0}
+  .nav-arrow{position:fixed;bottom:50%;font-size:18px;color:var(--text-2);width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-2);background:rgba(0,0,0,.6);backdrop-filter:blur(8px);border-radius:50%;opacity:0;transition:opacity .25s ease;pointer-events:none;z-index:55}
+  .nav-zone:hover + .nav-arrow,.nav-arrow.show{opacity:.7}
+  .nav-arrow.left{left:24px}
+  .nav-arrow.right{right:24px}
+
+  .slide-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;height:24px}
+  .slide-head .left{display:flex;align-items:center;gap:14px}
+  .slide-head .left img{width:20px;height:20px;display:block;opacity:.9}
+  .eyebrow{text-transform:uppercase;font-size:11px;letter-spacing:.22em;color:var(--magenta);font-weight:600}
+  .section-num{font-family:'JetBrains Mono',monospace;color:var(--text-muted);font-size:12px;letter-spacing:.12em;font-weight:500}
+  .appendix-tag{display:inline-block;font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding:2px 8px;background:rgba(255,255,255,.08);color:var(--text-3);font-weight:700;border-radius:3px;margin-right:10px}
+
+  .lead{font-size:clamp(15px,1.18vw,19px);line-height:1.55;color:var(--text-2);max-width:920px;font-weight:400}
+
+  /* Cover */
+  .slide.cover{padding:64px 80px;background:radial-gradient(900px 600px at 80% -10%, rgba(246,51,162,.18), transparent 60%),radial-gradient(700px 500px at 10% 110%, rgba(153,95,248,.16), transparent 60%),#000}
+  .cover .brand-row{display:flex;align-items:center;gap:16px;color:var(--text-3);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
+  .cover .brand-row img{width:32px;height:32px}
+  .cover .body{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .cover h1{margin:24px 0 28px}
+  .cover .meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--border-2);margin-top:auto;padding-top:6px}
+  .cover .meta-grid > div{padding:20px 24px 0 0;border-right:1px solid var(--border)}
+  .cover .meta-grid > div:last-child{border-right:0;padding-right:0}
+  .cover .meta-grid .k{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);font-weight:600}
+  .cover .meta-grid .v{font-size:clamp(15px,1.4vw,20px);color:var(--text);margin-top:6px;line-height:1.25;font-weight:500}
+
+  /* Panels & grids */
+  .panel{background:var(--surface);border:1px solid var(--border);padding:28px;border-radius:6px}
+  .panel.elev{background:var(--surface-2)}
+  .panel.brand{border:1px solid var(--border);background:var(--surface);position:relative;overflow:hidden}
+  .panel.brand::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+
+  .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border-2);background:rgba(255,255,255,.04);padding:6px 12px;font-size:12px;font-weight:500;color:var(--text-2);border-radius:999px;white-space:nowrap}
+  .pill.brand{border-color:var(--border-brand);background:rgba(246,51,162,.08);color:var(--text)}
+  .pill.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--magenta);box-shadow:0 0 8px rgba(246,51,162,.6)}
+  .pillrow{display:flex;flex-wrap:wrap;gap:8px}
+
+  .kpi{border-left:2px solid var(--magenta);padding:6px 0 6px 18px}
+  .kpi .n{font-family:'Onest',sans-serif;font-size:clamp(40px,4.6vw,68px);line-height:1;color:var(--text);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.035em}
+  .kpi .l{font-size:13px;color:var(--text-3);margin-top:8px;line-height:1.45;max-width:260px}
+  .kpi.critical{border-color:var(--red)}
+  .kpi.critical .n{background:var(--grad-r);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+  blockquote{margin:0;padding:22px 26px;border-left:3px solid;border-image:var(--grad) 1;background:var(--surface);font-size:clamp(18px,1.6vw,24px);line-height:1.4;color:var(--text);font-weight:500;letter-spacing:-.01em;font-style:italic}
+  blockquote cite{display:block;font-style:normal;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-top:12px;font-weight:600}
+
+  .northstar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;flex:1;min-height:0}
+  .ns-pillar{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:22px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .ns-pillar::before{content:"";position:absolute;top:0;left:0;right:0;height:2px}
+  .ns-pillar.p1::before{background:linear-gradient(90deg,#995FF8 0%,rgba(153,95,248,0) 100%)}
+  .ns-pillar.p2::before{background:linear-gradient(90deg,#F633A2 0%,rgba(246,51,162,0) 100%)}
+  .ns-pillar.p3::before{background:linear-gradient(90deg,#FF0342 0%,rgba(255,3,66,0) 100%)}
+  .ns-pillar.p4::before{background:linear-gradient(90deg,#FF8A00 0%,rgba(255,138,0,0) 100%)}
+  .ns-tag{display:inline-block;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 8px;margin-bottom:14px;font-weight:600;border-radius:3px;align-self:flex-start}
+  .ns-tag.purple{background:rgba(153,95,248,.18);color:#C6A8FF;border:1px solid rgba(153,95,248,.4)}
+  .ns-tag.magenta{background:rgba(246,51,162,.18);color:#FF8FCD;border:1px solid rgba(246,51,162,.4)}
+  .ns-tag.red{background:rgba(255,3,66,.22);color:#FF889F;border:1px solid rgba(255,3,66,.5)}
+  .ns-tag.orange{background:rgba(255,138,0,.18);color:#FFB766;border:1px solid rgba(255,138,0,.4)}
+  .ns-pillar h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:-.018em;margin:0 0 4px;line-height:1.2;font-weight:600}
+  .ns-pillar .ns-sub{font-size:12px;color:var(--text-3);margin-bottom:14px;line-height:1.45}
+  .ns-row{display:flex;flex-direction:column;gap:5px;padding:12px 0;border-top:1px solid var(--border)}
+  .ns-row-label{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+  .ns-row.today .ns-row-label{color:#FFB766}
+  .ns-row.now .ns-row-label{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .ns-row-text{font-size:13px;line-height:1.5;color:var(--text-2);margin:0}
+  .ns-row.now .ns-row-text{color:var(--text);font-style:italic}
+  .ns-row-systems{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:14px;border-top:1px solid var(--border)}
+  .ns-syspill{font-size:10px;color:var(--text-3);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:3px 8px;border-radius:3px;letter-spacing:.02em;white-space:nowrap}
+
+  /* North Star slide */
+  .ns-scene{flex:1;min-height:0;display:grid;grid-template-columns:1fr auto 1fr;gap:48px;align-items:center;padding:0 20px;position:relative}
+  .ns-stage{display:flex;flex-direction:column;gap:16px;text-align:left}
+  .ns-stage.from{align-items:flex-end;text-align:right}
+  .ns-stage.to{align-items:flex-start}
+  .ns-stage .ns-label{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+  .ns-stage .ns-actors{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--text-3);line-height:1.5}
+  .ns-stage .ns-bubble{background:var(--surface);border:1px solid var(--border-2);border-radius:18px;padding:18px 22px;font-size:16px;color:var(--text);line-height:1.45;font-weight:500;max-width:320px;letter-spacing:-.01em;position:relative}
+  .ns-stage.from .ns-bubble{border-top-right-radius:4px}
+  .ns-stage.to .ns-bubble{border-top-left-radius:4px;border-color:var(--border-brand);background:linear-gradient(135deg,rgba(246,51,162,.10),rgba(255,138,0,.04))}
+  .ns-stage.to .ns-bubble strong{display:block;font-size:18px;margin-bottom:8px;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;font-weight:700;letter-spacing:-.018em}
+  .ns-stage .ns-cites{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+  .ns-stage.from .ns-cites{justify-content:flex-end}
+  .ns-stage .ns-cite{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-3);background:rgba(255,255,255,.05);border:1px solid var(--border);padding:2px 7px;border-radius:3px}
+
+  .ns-stack{display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;width:300px;padding:18px 0}
+  .ns-stack::before{content:"";position:absolute;inset:-20px -10px;border-radius:18px;background:radial-gradient(ellipse at center, rgba(246,51,162,.18), transparent 70%);z-index:0;animation:platformPulse 3.6s ease-in-out infinite}
+  @keyframes platformPulse{0%,100%{opacity:.55;transform:scale(.94)}50%{opacity:1;transform:scale(1.05)}}
+  .ns-layer{position:relative;z-index:2;background:var(--surface);border:1px solid var(--border-2);border-radius:12px;padding:16px 22px;display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;text-align:center}
+  .ns-layer .ns-layer-tag{font-size:9.5px;color:var(--text-muted);font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+  .ns-layer .ns-layer-name{font-size:15px;color:var(--text);font-weight:700;letter-spacing:-.012em;line-height:1.2}
+  .ns-layer .ns-layer-sub{font-size:11px;color:var(--text-3);font-weight:500;line-height:1.4}
+  .ns-layer.agents{border-color:var(--border-brand);background:linear-gradient(135deg, rgba(246,51,162,.10), rgba(255,138,0,.04))}
+  .ns-layer.agents .ns-layer-tag{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .ns-layer.agents img{width:34px;height:34px;filter:drop-shadow(0 0 14px rgba(246,51,162,.6))}
+  .ns-connector{position:relative;z-index:2;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--magenta);letter-spacing:.2em;font-weight:700;padding:4px 12px;background:rgba(246,51,162,.10);border:1px solid var(--border-brand);border-radius:4px}
+  .ns-layer.platform{padding:20px 22px;border-color:var(--border-2);background:var(--surface-2)}
+  .ns-layer.platform .ns-layer-tag{color:var(--text-3)}
+
+  .ns-pledge{
+    margin-top:32px;padding:22px 28px;background:var(--surface);border:1px solid var(--border-brand);border-radius:8px;
+    text-align:center;font-size:clamp(16px,1.4vw,20px);line-height:1.45;color:var(--text);font-weight:500;letter-spacing:-.01em;
+    position:relative;overflow:hidden;
+  }
+  .ns-pledge::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+
+  /* What we're building */
+  .build-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;flex:1;min-height:0}
+  .build-card{background:var(--surface);border:1px solid var(--border);padding:24px;border-radius:8px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+  .build-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+  .build-card .bc-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--magenta);letter-spacing:.1em;font-weight:600}
+  .build-card .bc-title{font-size:clamp(18px,1.5vw,22px);line-height:1.2;letter-spacing:-.018em;font-weight:600;color:var(--text)}
+  .build-card .bc-sub{font-size:13px;color:var(--text-2);line-height:1.55;margin:0;flex:1}
+  .build-card .bc-tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted);margin-top:4px}
+
+  /* Architecture SVG */
+  .arch{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:8px 0}
+  .arch svg{display:block;width:auto;max-width:100%;max-height:100%}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;flex:1;min-height:0;align-items:stretch}
+
+  .force{border:1px solid var(--border);background:var(--surface);padding:28px;position:relative;display:flex;flex-direction:column;height:100%;border-radius:6px;overflow:hidden}
+  .force::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+  .force .yr{position:absolute;top:18px;right:22px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--magenta);letter-spacing:.1em;font-weight:600}
+  .force h4{margin-bottom:12px;padding-right:80px}
+  .force p{font-size:14.5px;margin:0 0 10px}
+
+  .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--border);margin-top:8px}
+  .phase{padding:22px 18px;border-right:1px solid var(--border)}
+  .phase:last-child{border-right:0}
+  .phase .ph-num{font-family:'JetBrains Mono',monospace;color:var(--magenta);font-size:13px;font-weight:600;letter-spacing:.1em}
+  .phase .ph-name{font-size:clamp(18px,1.5vw,22px);color:var(--text);margin:8px 0 6px;line-height:1.2;font-weight:600;letter-spacing:-.018em}
+  .phase .ph-when{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+  .phase ul{margin:14px 0 0;padding:0;list-style:none}
+  .phase li{font-size:12.5px;color:var(--text-2);padding:3px 0;line-height:1.45}
+  .phase li::before{content:"—";color:var(--magenta);margin-right:6px}
+
+  .value{background:var(--surface);border:1px solid var(--border);padding:22px;position:relative;display:flex;flex-direction:column;border-radius:6px;overflow:hidden}
+  .value::before{content:"";position:absolute;top:0;left:0;width:48px;height:2px;background:var(--grad)}
+  .value h4{margin-bottom:6px}
+  .value .stat{font-size:clamp(28px,2.8vw,42px);line-height:1;margin:8px 0 12px;font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:-.028em;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .value .stat small{font-size:16px;color:var(--text-3);margin-left:4px;font-weight:500;letter-spacing:0;-webkit-text-fill-color:var(--text-3);background:none}
+  .value p{font-size:13px;margin:0;line-height:1.55}
+
+  .bp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+  .bp-grid > div{background:var(--surface);padding:22px}
+  .bp-grid .bp-cat{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--magenta);font-weight:700;margin-bottom:8px}
+  .bp-grid h4{margin-bottom:6px;font-size:clamp(15px,1.2vw,18px)}
+  .bp-grid p{font-size:12.5px;margin:0;line-height:1.5;color:var(--text-3)}
+
+  /* Assumptions */
+  .assume-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;flex:1;min-height:0}
+  .assume-col{background:var(--surface);border:1px solid var(--border);padding:24px;display:flex;flex-direction:column;overflow:hidden;border-radius:6px;position:relative}
+  .assume-col::before{content:"";position:absolute;top:0;left:0;right:0;height:3px}
+  .assume-col.confirmed::before{background:var(--ok)}
+  .assume-col.assumed::before{background:var(--grad)}
+  .assume-col .cat{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .assume-col.confirmed .cat{color:var(--ok)}
+  .assume-col.assumed .cat{color:var(--magenta)}
+  .assume-col h3{margin-bottom:14px}
+  .assume-col ul{margin:0;padding:0;list-style:none;flex:1;overflow:auto}
+  .assume-col li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13.5px;line-height:1.55;color:var(--text-2);display:flex;align-items:flex-start;gap:12px}
+  .assume-col li:last-child{border-bottom:0}
+  .assume-col li::before{content:"";flex:0 0 7px;width:7px;height:7px;margin-top:7px;border-radius:50%}
+  .assume-col li > div:first-child{display:none}
+  .assume-col li > div:last-child{flex:1;min-width:0}
+  .assume-col.confirmed li::before{background:var(--ok);box-shadow:0 0 8px rgba(0,200,150,.4)}
+  .assume-col.assumed li::before{background:var(--magenta);box-shadow:0 0 8px rgba(246,51,162,.4)}
+  .assume-col li strong{color:var(--text);font-weight:600}
+
+  /* Medallion */
+  .medallion{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  .med{padding:20px;border:1px solid var(--border);background:var(--surface);position:relative;border-radius:6px;overflow:hidden}
+  .med::before{content:"";position:absolute;top:0;left:0;right:0;height:3px}
+  .med.bronze::before{background:#A86A3D}
+  .med.silver::before{background:var(--purple)}
+  .med.gold::before{background:var(--grad-r)}
+  .med .lab{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .med.bronze .lab{color:#D89968}
+  .med.silver .lab{color:#C6A8FF}
+  .med.gold .lab{color:#FFB766}
+  .med h4{margin-bottom:6px}
+  .med p{font-size:12.5px;margin:0;color:var(--text-3)}
+
+  .mcp-tools{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+  .tool{background:var(--surface-2);border:1px solid var(--border-brand);padding:16px;text-align:center;border-radius:6px}
+  .tool .tn{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--magenta);font-weight:600;letter-spacing:.04em}
+  .tool .td{font-size:11.5px;color:var(--text-3);margin-top:6px;line-height:1.4}
+
+  .agents{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}
+  .agent{background:var(--surface);border:1px solid var(--border);padding:18px;display:flex;flex-direction:column;gap:6px;border-radius:6px;position:relative;overflow:hidden}
+  .agent::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+  .agent .nm{font-size:18px;color:var(--text);font-weight:600;line-height:1.15;letter-spacing:-.012em}
+  .agent .ds{font-size:12px;color:var(--text-3);line-height:1.45}
+  .agent .ex{font-size:11.5px;color:var(--text-2);font-style:italic;line-height:1.45;margin-top:6px;padding-top:8px;border-top:1px dashed var(--border)}
+
+  .sysgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+  .syschip{background:var(--surface);border:1px solid var(--border);padding:10px 14px;font-size:12.5px;color:var(--text-2);font-weight:500;border-radius:6px}
+  .syschip.brand{background:rgba(246,51,162,.06);border-color:var(--border-brand);color:var(--text)}
+  .syschip .t{font-size:10px;color:var(--magenta);font-weight:600;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:2px}
+  .syschip:not(.brand) .t{color:var(--text-muted)}
+
+  .ingest{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  .ingest > div{background:var(--surface);border:1px solid var(--border);padding:16px;border-left:3px solid var(--magenta);border-radius:0 6px 6px 0}
+  .ingest .il{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--magenta);font-weight:700;margin-bottom:4px}
+  .ingest .ic{font-size:13px;color:var(--text);font-weight:600;line-height:1.3;letter-spacing:-.01em}
+  .ingest .id{font-size:11.5px;color:var(--text-3);margin-top:6px;line-height:1.45}
+
+  /* ==== STEP-BASED ANIMATION SYSTEM ==== */
+  /* Each animated scene has data-steps="N" and data-step="K". Elements inside
+     carry data-stage="N". When data-stage <= data-step, JS adds .on; the
+     active stage also gets .active. CSS reveals + retriggers animations. */
+
+  /* Base reveal */
+  .qbox,.think,.tools-stream,.answer,.bg-event,.bg-agent,.bg-tools,.bg-verdict,.bg-actions,.bg-closer,.dcard{
+    opacity:0;transform:translateY(8px);transition:opacity .5s ease, transform .5s ease;
+  }
+  .qbox.on,.think.on,.tools-stream.on,.answer.on,.bg-event.on,.bg-agent.on,.bg-tools.on,.bg-verdict.on,.bg-actions.on,.bg-closer.on,.dcard.on{
+    opacity:1;transform:translateY(0);
+  }
+
+  /* Active stage highlight on data cards */
+  .dcard.active{border-color:var(--magenta);box-shadow:0 0 0 1px rgba(246,51,162,.35), 0 8px 30px rgba(246,51,162,.2)}
+
+  /* Animated pipeline */
+  .pipeline{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:0;position:relative}
+  .stations{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;align-items:start;padding:48px 0 0}
+  .station-line{position:absolute;top:80px;left:6%;right:6%;height:2px;background:linear-gradient(90deg, rgba(255,255,255,.06) 0%, rgba(255,255,255,.16) 50%, rgba(255,255,255,.06) 100%);z-index:1}
+  .station{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;padding:0 12px}
+  .station .dot{width:44px;height:44px;border-radius:50%;background:var(--surface-2);border:2px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-2);font-weight:700;position:relative;transition:all .4s ease}
+  .station.passed .dot{border-color:rgba(246,51,162,.55);background:rgba(246,51,162,.06);color:var(--text)}
+  .station.active .dot{border-color:var(--magenta);background:rgba(246,51,162,.18);box-shadow:0 0 24px rgba(246,51,162,.6);color:#fff;transform:scale(1.12)}
+  .station .name{margin-top:12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-3);font-weight:600}
+  .station.active .name{color:var(--text)}
+  .station .sub{font-size:11.5px;color:var(--text-muted);margin-top:4px;text-align:center;line-height:1.4}
+
+  .data-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+  .dcard{background:var(--surface);border:1px solid var(--border);padding:18px;border-radius:6px;font-family:'Onest',sans-serif;font-size:12.5px;line-height:1.55;color:var(--text-2);min-height:200px;position:relative;overflow:hidden}
+  .dcard .dhead{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);font-weight:600;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--border)}
+  .dcard .dhead .badge{color:var(--magenta);font-weight:600}
+  .dcard .row{display:block;padding:3px 0;color:var(--text-2)}
+  .dcard .row.k{color:var(--text-muted);font-size:11px;letter-spacing:.04em;font-weight:500;text-transform:uppercase;margin-top:6px}
+  .dcard .row.warn{color:#FFB766;font-weight:500}
+  .dcard .row.ok{color:var(--ok);font-weight:500}
+  .dcard .row.dim{color:var(--text-muted)}
+  .dcard .row.lead{color:var(--text);font-weight:600;font-size:13px;line-height:1.4;margin-bottom:4px}
+
+  /* Step-progress badge on animated slides */
+  .step-progress{position:absolute;top:48px;right:72px;display:flex;gap:6px;z-index:10;pointer-events:none}
+  .step-progress .sp-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.10);transition:all .25s ease}
+  .step-progress .sp-dot.on{background:var(--magenta);box-shadow:0 0 8px rgba(246,51,162,.6)}
+  .step-progress .sp-hint{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:.14em;margin-left:10px;align-self:center}
+
+  /* Conversational agent */
+  .scene{flex:1;min-height:0;display:flex;flex-direction:column;gap:18px}
+  .qbox{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 22px;position:relative}
+  .qbox .qlabel{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--magenta);font-weight:600;margin-bottom:8px}
+  .qbox .qtext{font-size:18px;color:var(--text);line-height:1.45;font-weight:500;letter-spacing:-.01em;overflow:hidden;white-space:normal}
+  .qbox .qtext.ar{font-family:'Onest',sans-serif;direction:rtl;font-size:20px;margin-bottom:8px}
+  .qbox .qtext.en{font-size:14px;color:var(--text-3);font-weight:400}
+  .typewrite{display:inline-block;width:0;overflow:hidden;white-space:nowrap;vertical-align:bottom;border-right:2px solid var(--magenta)}
+  .qbox.on .typewrite{animation:type 2.4s steps(80) forwards, blink .7s step-end 4}
+  @keyframes type{to{width:100%}}
+  @keyframes blink{50%{border-color:transparent}}
+
+  .think{display:flex;gap:8px;flex-wrap:wrap}
+  .thinkpill{background:rgba(246,51,162,.08);border:1px solid var(--border-brand);color:var(--text-2);padding:6px 12px;font-size:12px;font-weight:500;border-radius:999px;opacity:0;transform:translateY(6px)}
+  .think.on .thinkpill{animation:popin .4s ease forwards}
+  .think.on .thinkpill:nth-child(1){animation-delay:.05s}
+  .think.on .thinkpill:nth-child(2){animation-delay:.25s}
+  .think.on .thinkpill:nth-child(3){animation-delay:.45s}
+  .think.on .thinkpill:nth-child(4){animation-delay:.65s}
+  @keyframes popin{to{opacity:1;transform:translateY(0)}}
+  @keyframes fadein{to{opacity:1}}
+
+  .tools-stream{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 22px}
+  .tcall{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);opacity:0;transform:translateY(4px)}
+  .tcall:last-child{border-bottom:0}
+  .tcall .tkw{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--magenta);font-weight:600;letter-spacing:.04em}
+  .tcall .tcode{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-2);line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tcall .tres{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ok);font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .tcall .tres::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+  .tools-stream.on .tcall{animation:tcallIn .5s ease forwards}
+  .tools-stream.on .tcall:nth-child(1){animation-delay:.1s}
+  .tools-stream.on .tcall:nth-child(2){animation-delay:.5s}
+  .tools-stream.on .tcall:nth-child(3){animation-delay:.9s}
+  .tools-stream.on .tcall:nth-child(4){animation-delay:1.3s}
+  @keyframes tcallIn{to{opacity:1;transform:translateY(0)}}
+
+  .answer{background:linear-gradient(180deg, rgba(246,51,162,.06), rgba(153,95,248,.03));border:1px solid var(--border-brand);border-radius:8px;padding:20px 22px}
+  .answer .alabel{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--magenta);font-weight:600;margin-bottom:8px}
+  .answer .atext{font-size:17px;color:var(--text);line-height:1.5;font-weight:500;letter-spacing:-.01em}
+  .answer .citations{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;opacity:0}
+  .answer.on .citations{animation:fadein .6s ease .9s forwards}
+  .answer .cite{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-3);background:rgba(255,255,255,.05);border:1px solid var(--border);padding:3px 8px;border-radius:4px}
+
+  /* Background agent */
+  .bg-scene{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:14px;align-content:start;position:relative}
+  .bg-event{grid-column:1 / 2;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 22px;position:relative;overflow:hidden}
+  .bg-event::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+  .bg-event .evtpulse{position:absolute;top:18px;right:22px;width:10px;height:10px;border-radius:50%;background:var(--magenta);box-shadow:0 0 0 0 rgba(246,51,162,.7)}
+  .bg-event.on .evtpulse{animation:pulseDot 1.8s ease-out infinite}
+  @keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(246,51,162,.7)}100%{box-shadow:0 0 0 16px rgba(246,51,162,0)}}
+  .bg-event .evtlabel{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--magenta);font-weight:600;margin-bottom:8px}
+  .bg-event .evttext{font-size:16px;color:var(--text);font-weight:500;line-height:1.4;letter-spacing:-.01em}
+  .bg-event .evtmeta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);margin-top:8px}
+
+  .bg-agent{grid-column:2 / 3;background:var(--surface);border:1px solid var(--border-brand);border-radius:8px;padding:18px 22px;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden}
+  .bg-agent::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+  .bg-agent .aicon{width:42px;height:42px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border-brand);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;color:var(--magenta)}
+  .bg-agent .aicon::after{content:"";position:absolute;inset:-3px;border-radius:10px;border:2px solid var(--magenta);opacity:0}
+  .bg-agent.on .aicon::after{animation:agentPulse 2s ease-out infinite}
+  @keyframes agentPulse{0%{opacity:.8;transform:scale(.85)}100%{opacity:0;transform:scale(1.25)}}
+  .bg-agent .aname{font-size:15px;color:var(--text);font-weight:600;letter-spacing:-.01em}
+  .bg-agent .asub{font-size:11.5px;color:var(--text-3);margin-top:2px;line-height:1.4}
+  .bg-agent .astatus{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ok);font-weight:600;display:flex;align-items:center;gap:6px}
+  .bg-agent .astatus::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+  .bg-agent.on .astatus::before{animation:blinkdot 1.4s ease-in-out infinite}
+  @keyframes blinkdot{50%{opacity:.4}}
+
+  .bg-tools{grid-column:1 / 3;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 22px}
+  .bg-tools .tlabel{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--magenta);font-weight:600;margin-bottom:8px}
+  .bg-tools .tcall{padding:7px 0}
+  .bg-tools.on .tcall{animation:tcallIn .45s ease forwards}
+  .bg-tools.on .tcall:nth-child(2){animation-delay:.1s}
+  .bg-tools.on .tcall:nth-child(3){animation-delay:.5s}
+  .bg-tools.on .tcall:nth-child(4){animation-delay:.9s}
+  .bg-tools.on .tcall:nth-child(5){animation-delay:1.3s}
+
+  .bg-verdict{grid-column:1 / 2;border-radius:8px;padding:20px 22px;position:relative;overflow:hidden;background:linear-gradient(135deg, rgba(246,51,162,.10), rgba(255,138,0,.06));border:1px solid var(--border-brand)}
+  .bg-verdict::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+  .bg-verdict .vlabel{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--magenta);font-weight:600;margin-bottom:6px}
+  .bg-verdict .vresult{font-size:22px;color:var(--text);font-weight:700;letter-spacing:-.018em;line-height:1.1}
+  .bg-verdict .vresult .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .bg-verdict .vmeta{font-size:13px;color:var(--text-2);margin-top:10px;line-height:1.5}
+
+  .bg-actions{grid-column:2 / 3;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 22px}
+  .bg-actions .alabel{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--magenta);font-weight:600;margin-bottom:8px}
+  .bg-actions ul{margin:0;padding:0;list-style:none}
+  .bg-actions li{padding:6px 0;font-size:13px;color:var(--text-2);line-height:1.45;display:flex;align-items:flex-start;gap:10px;opacity:0;transform:translateX(-4px)}
+  .bg-actions li::before{content:"✓";color:var(--ok);font-weight:700;flex-shrink:0}
+  .bg-actions.on li{animation:slideIn .4s ease forwards}
+  .bg-actions.on li:nth-child(1){animation-delay:.05s}
+  .bg-actions.on li:nth-child(2){animation-delay:.25s}
+  .bg-actions.on li:nth-child(3){animation-delay:.45s}
+  .bg-actions.on li:nth-child(4){animation-delay:.65s}
+  @keyframes slideIn{to{opacity:1;transform:translateX(0)}}
+
+  .bg-closer{grid-column:1 / 3;display:flex;justify-content:center;align-items:center;gap:14px;margin-top:4px}
+
+  /* Overlays */
+  .help-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);color:#fff;display:none;align-items:center;justify-content:center;z-index:100}
+  .help-overlay.show{display:flex}
+  .help-card{max-width:560px;padding:42px;background:var(--surface);border:1px solid var(--border-brand);border-radius:8px}
+  .help-card h3{color:#fff;margin-bottom:18px}
+  .help-card kbd{display:inline-block;padding:3px 9px;background:var(--bg);border:1px solid var(--border-2);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--magenta);margin-right:6px;border-radius:3px}
+  .help-card .row{display:grid;grid-template-columns:160px 1fr;gap:8px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border);color:var(--text-3)}
+  .help-card .row:last-child{border:0}
+
+  .overview{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:90;padding:40px;display:none;flex-direction:column;overflow:auto}
+  .overview.show{display:flex}
+  .overview h3{color:#fff;margin-bottom:20px}
+  .overview .ov-section-label{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);font-weight:700;margin:22px 0 12px}
+  .overview .ov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .ov-card{background:var(--surface);border:1px solid var(--border);padding:18px;cursor:pointer;transition:all .15s ease;color:#fff;border-radius:6px}
+  .ov-card:hover{border-color:var(--magenta);background:var(--surface-2)}
+  .ov-card.current{border-color:var(--magenta);background:var(--surface-2);box-shadow:0 0 0 1px var(--border-brand)}
+  .ov-card.appendix{background:var(--bg-1);border-style:dashed}
+  .ov-card .ov-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--magenta);letter-spacing:.1em}
+  .ov-card .ov-title{font-size:17px;color:#fff;margin-top:6px;line-height:1.2;font-weight:600;letter-spacing:-.012em}
+
+  @media print{
+    html,body{overflow:visible;height:auto;background:#000}
+    .deck{position:static}
+    .slide{position:relative;opacity:1 !important;transform:none !important;page-break-after:always;break-after:page;min-height:100vh}
+    .chrome,.progress,.nav-zone,.nav-arrow,.help-overlay,.overview{display:none !important}
+  }
+
+  /* ============================================================
+     MOBILE BREAKPOINTS — tablet (≤900px) and phone (≤600px)
+     The deck was designed for landscape laptop / projector. On
+     narrow viewports we collapse multi-column grids, shrink type,
+     tighten padding, and let slides scroll vertically.
+     ============================================================ */
+
+  /* TABLET — single-column on most multi-column grids */
+  @media (max-width: 900px){
+    .slide{padding:32px 28px 80px;overflow-y:auto}
+    .slide.cover{padding:40px 28px}
+    h1{font-size:clamp(40px,7vw,72px);line-height:1.05}
+    h2{font-size:clamp(28px,4.6vw,48px)}
+    h3{font-size:clamp(20px,2.6vw,28px)}
+    .lead{font-size:clamp(14px,1.6vw,17px)}
+    .slide-head{height:auto;margin-bottom:18px;flex-wrap:wrap;gap:8px}
+    .eyebrow{font-size:10px;letter-spacing:.18em}
+
+    .grid-2,.grid-3,.grid-4,.grid-5,.split{grid-template-columns:1fr 1fr;gap:16px}
+    .northstar,.build-grid,.bp-grid{grid-template-columns:1fr 1fr;gap:14px}
+    .timeline{grid-template-columns:1fr 1fr !important;border-top:0;gap:1px;background:var(--border)}
+    .phase{border-right:0 !important;background:var(--surface);border-radius:6px}
+
+    /* Architecture SVG — letterbox-fit, allow horizontal scroll on extreme cases */
+    .arch{overflow:auto}
+    .arch svg{min-width:760px;height:auto}
+
+    /* Cover meta-grid → 2-col */
+    .cover .meta-grid{grid-template-columns:1fr 1fr}
+    .cover .meta-grid > div:nth-child(2n){border-right:0;padding-right:0}
+
+    /* Animated pipeline → stack stations vertically */
+    .stations{grid-template-columns:1fr;gap:6px;padding:8px 0 0}
+    .station-line{display:none}
+    .station{flex-direction:row;justify-content:flex-start;gap:14px;padding:6px 0;text-align:left}
+    .station .name{margin-top:0}
+    .station .sub{text-align:left;margin-top:0}
+    .data-cards{grid-template-columns:1fr;gap:10px;margin-top:18px}
+    .dcard{min-height:auto;padding:14px}
+
+    /* North Star scene → stacked */
+    .ns-scene{grid-template-columns:1fr;gap:18px;padding:0}
+    .ns-stage.from,.ns-stage.to{align-items:stretch;text-align:left}
+    .ns-stage.from{align-items:stretch}
+    .ns-stage .ns-bubble{max-width:none}
+    .ns-stage.from .ns-bubble,.ns-stage.to .ns-bubble{border-top-left-radius:18px;border-top-right-radius:18px}
+    .ns-stage .ns-cites,.ns-stage.from .ns-cites{justify-content:flex-start}
+    .ns-stack{width:100%;max-width:380px;margin:0 auto}
+
+    /* Background-agent scene → single column */
+    .bg-scene{grid-template-columns:1fr}
+    .bg-event,.bg-agent,.bg-tools,.bg-verdict,.bg-actions,.bg-closer{grid-column:1 !important}
+    .bg-closer{flex-wrap:wrap;justify-content:center}
+
+    /* Step-progress indicator moves below slide-head */
+    .step-progress{position:static;margin:0 0 14px;justify-content:flex-start;padding:0}
+
+    /* Tool-call rows wrap nicely */
+    .tcall{grid-template-columns:1fr;gap:4px;align-items:flex-start}
+    .tcall .tcode{white-space:normal;font-size:11px}
+    .tcall .tres{justify-self:flex-start}
+
+    /* Agent cards row → 2-col */
+    .agents{grid-template-columns:1fr 1fr;gap:10px}
+
+    /* Source chips → 2-col */
+    .sysgrid{grid-template-columns:1fr 1fr;gap:8px}
+
+    /* Ingest pattern blocks → stack */
+    .ingest{grid-template-columns:1fr;gap:10px}
+
+    /* Medallion → stack */
+    .medallion{grid-template-columns:1fr;gap:10px}
+
+    /* MCP tools grid */
+    .mcp-tools{grid-template-columns:1fr 1fr}
+
+    /* Assumptions → stack (the columns are independently scrollable) */
+    .assume-grid{grid-template-columns:1fr;gap:18px}
+    .assume-col{max-height:none}
+
+    /* Chrome footer + nav arrows */
+    .chrome{padding:12px 18px;font-size:10px}
+    .nav-zone{width:32%}
+    .nav-arrow{display:none}
+
+    /* Overview grid */
+    .overview .ov-grid{grid-template-columns:1fr 1fr;gap:10px}
+    .ov-card{padding:12px}
+  }
+
+  /* PHONE — everything goes single-column, type goes smaller */
+  @media (max-width: 600px){
+    .slide{padding:24px 18px 72px}
+    .slide.cover{padding:28px 18px}
+    h1{font-size:clamp(32px,11vw,56px);line-height:1.05}
+    h2{font-size:clamp(22px,7vw,36px);line-height:1.1}
+    h3{font-size:clamp(18px,5vw,24px)}
+    h4{font-size:16px}
+    p,.lead{font-size:14px;line-height:1.55}
+    .lead{font-size:14.5px}
+
+    .slide-head{margin-bottom:14px}
+    .eyebrow{font-size:9.5px;letter-spacing:.16em;max-width:78%;line-height:1.4;white-space:normal}
+    .section-num{font-size:10px}
+    .grad-line{margin-bottom:16px;width:44px}
+
+    /* Cover */
+    .cover .brand-row{font-size:10px;gap:10px}
+    .cover .brand-row img{width:24px;height:24px}
+    .cover .meta-grid{grid-template-columns:1fr;border-top:1px solid var(--border-2)}
+    .cover .meta-grid > div{padding:14px 0 0 0;border-right:0 !important;border-bottom:1px solid var(--border)}
+    .cover .meta-grid > div:last-child{border-bottom:0}
+    .cover .meta-grid .v{font-size:15px}
+
+    /* Every grid → single column */
+    .grid-2,.grid-3,.grid-4,.grid-5,.split,
+    .northstar,.build-grid,.bp-grid,
+    .agents,.sysgrid,.mcp-tools,.timeline{grid-template-columns:1fr !important;gap:12px}
+
+    /* KPIs grid keeps 2-col so the four numbers stay scannable */
+    .grid-4{grid-template-columns:1fr 1fr !important}
+    .kpi .n{font-size:38px}
+    .kpi .l{font-size:11.5px}
+
+    /* North Star tweaks */
+    .ns-platform{width:200px;height:200px}
+    .ns-platform img{width:120px;height:120px}
+    .ns-stack{padding:12px 0}
+    .ns-pledge{font-size:14px;padding:16px 18px;margin-top:20px}
+
+    /* Cards */
+    .panel{padding:18px}
+    .ns-pillar{padding:16px}
+    .ns-pillar h3{font-size:18px}
+    .ns-pillar .ns-sub{font-size:11.5px}
+    .build-card{padding:18px}
+    .force{padding:20px}
+    .force .yr{position:static;display:inline-block;margin-bottom:8px}
+    .force h4{padding-right:0}
+    .value{padding:18px}
+    .value .stat{font-size:32px}
+
+    /* Phase timeline cells */
+    .phase{padding:16px;border-radius:6px}
+    .phase .ph-name{font-size:18px}
+
+    /* Architecture SVG */
+    .arch{padding:0;margin:0 -18px;overflow:auto}
+    .arch svg{min-width:720px;max-width:none}
+
+    /* Animated pipeline cards */
+    .dcard{padding:14px;min-height:auto}
+    .dcard .dhead{margin-bottom:10px;padding-bottom:8px;font-size:9.5px}
+    .dcard .row.lead{font-size:12.5px}
+    .dcard .row{font-size:11.5px}
+
+    /* Quote */
+    blockquote{font-size:17px;padding:16px 18px}
+
+    /* Pills shrink */
+    .pill{padding:5px 10px;font-size:11px}
+    .pillrow{gap:6px}
+
+    /* Agent cards individual */
+    .agent{padding:14px}
+    .agent .nm{font-size:16px}
+    .agent .ds{font-size:11px}
+
+    /* Bottom chrome */
+    .chrome{padding:10px 14px;font-size:9px;letter-spacing:.12em}
+
+    /* Overview overlay */
+    .overview{padding:24px}
+    .overview h3{font-size:20px}
+    .overview .ov-grid{grid-template-columns:1fr;gap:10px}
+    .overview .ov-section-label{font-size:9.5px;margin:16px 0 10px}
+    .ov-card .ov-title{font-size:15px}
+
+    /* Help overlay */
+    .help-card{padding:28px 22px;max-width:340px}
+    .help-card .row{grid-template-columns:120px 1fr;font-size:12px}
+
+    /* Hide cursor-y nav arrows entirely on mobile (use swipe) */
+    .nav-arrow,.nav-zone{display:none}
+
+    /* Animation step-progress */
+    .step-progress .sp-hint{display:none}
+
+    /* Cite chips wrap */
+    .answer .citations{gap:4px}
+    .answer .cite{font-size:9.5px;padding:2px 6px}
+
+    /* Tool calls — already stacked but tighten */
+    .tools-stream{padding:14px 16px}
+    .tcall .tkw{font-size:10px}
+    .tcall .tcode{font-size:10.5px}
+    .tcall .tres{font-size:10px}
+
+    /* Background-agent specific */
+    .bg-event,.bg-agent,.bg-tools,.bg-verdict,.bg-actions{padding:14px 16px}
+    .bg-agent .aicon{width:34px;height:34px}
+    .bg-verdict .vresult{font-size:18px}
+    .bg-event .evttext{font-size:14px}
+
+    /* Auth gate already handles its own media queries via inline styles */
+  }
+
+  /* VERY SMALL — squeeze a bit more */
+  @media (max-width: 380px){
+    .slide{padding:20px 14px 64px}
+    h1{font-size:32px}
+    h2{font-size:22px}
+    h3{font-size:17px}
+    .kpi .n{font-size:32px}
+    .grid-4{grid-template-columns:1fr !important}
+  }
+
+  /* LANDSCAPE PHONE — give the deck more height back */
+  @media (max-width: 900px) and (orientation: landscape) and (max-height: 500px){
+    .slide{padding:18px 36px 56px}
+    h1{font-size:36px}
+    h2{font-size:24px}
+    .ns-platform{width:160px;height:160px}
+    .ns-platform img{width:90px;height:90px}
+  }
+
+  /* ============================================================
+     MOBILE SAFETY LAYER — overlap & overflow fixes
+     This block runs LAST so its rules win the cascade. Everything
+     here is defensive: stops elements floating over each other,
+     stops horizontal overflow, ensures chrome never overlaps content.
+     ============================================================ */
+  @media (max-width: 900px){
+    /* Every slide: no horizontal scroll, allow vertical */
+    .slide{overflow-x:hidden !important;overflow-y:auto !important}
+    /* Flex/grid children must be allowed to shrink */
+    .slide *,.slide{min-width:0}
+    .slide p, .slide h1, .slide h2, .slide h3, .slide h4,
+    .slide .ns-row-text, .slide .ns-sub, .slide .tcode,
+    .slide .atext, .slide .bc-sub, .slide blockquote{
+      overflow-wrap:break-word; word-break:break-word;
+    }
+
+    /* Slide-head: stack on phone, never collide */
+    .slide-head{flex-wrap:wrap;align-items:flex-start;row-gap:6px}
+    .slide-head .left{flex:1 1 auto;min-width:0;max-width:100%}
+    .slide-head .eyebrow{display:inline-block;max-width:none;white-space:normal;line-height:1.4}
+    .slide-head .section-num{flex:0 0 auto;white-space:nowrap}
+
+    /* Step-progress: guaranteed normal-flow on mobile */
+    .step-progress{
+      position:static !important; top:auto !important; right:auto !important;
+      display:flex !important; align-items:center; flex-wrap:wrap;
+      margin:0 0 14px 0 !important; padding:0;
+    }
+
+    /* Background-agent grid: explicit auto rows so children stack cleanly */
+    .bg-scene{grid-template-columns:1fr !important; grid-template-rows:auto}
+    .bg-event,.bg-agent,.bg-tools,.bg-verdict,.bg-actions,.bg-closer{grid-column:1 !important}
+
+    /* North-Star centerpiece: clip the radial glow so it never overflows */
+    .ns-platform{position:relative;overflow:visible}
+    .ns-stack{margin-left:auto;margin-right:auto}
+  }
+
+  @media (max-width: 600px){
+    /* Cover: reserve room for the fixed chrome footer */
+    .slide.cover{padding:28px 18px 80px !important}
+
+    /* Architecture SVG: visible "swipe to explore" hint */
+    .arch{position:relative}
+    .arch::after{
+      content:"↔ swipe to explore";
+      position:absolute; right:8px; bottom:8px;
+      font-family:'JetBrains Mono',monospace; font-size:10px;
+      color:var(--magenta); letter-spacing:.1em;
+      padding:4px 8px; border:1px solid var(--border-brand);
+      background:rgba(0,0,0,.65); border-radius:4px;
+      pointer-events:none;
+    }
+
+    /* Assumptions: let the parent slide scroll — no inner scrollbars */
+    .assume-col ul{overflow:visible !important;max-height:none}
+    .assume-col{max-height:none}
+
+    /* Chrome footer: tighten further, simpler */
+    .chrome{padding:8px 12px;font-size:9px;letter-spacing:.10em}
+    .chrome .brandmini span{display:none}
+    .chrome .brandmini img{width:14px;height:14px}
+
+    /* Pillrow gap-fit so pills never collide */
+    .pillrow{row-gap:6px}
+
+    /* Bg-actions: relax flex to wrap */
+    .bg-actions li{flex-wrap:wrap}
+    .bg-closer{row-gap:8px}
+
+    /* Force the SVG architecture to align top-left when scrolled */
+    .arch svg{display:block}
+
+    /* Cover meta-grid: keep generous top spacing so it doesn't kiss the lead */
+    .cover .meta-grid{margin-top:24px}
+    .cover .body{justify-content:flex-start;padding-top:8px}
+
+    /* Help overlay: smaller padding */
+    .help-overlay{padding:16px}
+
+    /* Build cards: tighten internal spacing */
+    .build-card{gap:8px}
+    .build-card .bc-sub{font-size:12.5px}
+    .build-card .bc-tag{font-size:10px}
+
+    /* Force-card year tag in flow */
+    .force .yr{position:static !important;margin:0 0 8px 0}
+    .force h4{padding-right:0}
+
+    /* Conversational scene tightening */
+    .qbox{padding:14px 16px}
+    .qbox .qtext{font-size:15px}
+    .qbox .qtext.ar{font-size:16px}
+    .qbox .qtext.en{font-size:13px}
+    .answer{padding:14px 16px}
+    .answer .atext{font-size:15px}
+
+    /* Stations: dot + name + sub align horizontally on phone */
+    .station{display:flex;flex-direction:row;align-items:center;gap:14px;padding:6px 0}
+    .station .dot{flex:0 0 44px}
+    .station .name, .station .sub{text-align:left}
+    .station .name{flex:0 0 auto}
+    .station .sub{flex:1 1 auto;font-size:11px}
+
+    /* Tighter cover h1 since lots of viewport height */
+    .cover h1{margin:16px 0 20px}
+  }
+
+  /* TINY — under 380px (older phones, narrow Android) */
+  @media (max-width: 380px){
+    .slide{padding:18px 14px 64px}
+    .slide.cover{padding:22px 14px 72px !important}
+    .ns-platform{width:160px;height:160px}
+    .ns-platform img{width:96px;height:96px}
+    .kpi .n{font-size:30px}
+    .build-card{padding:14px}
+    .ns-pillar{padding:14px}
+    .panel{padding:14px}
+    .value{padding:14px}
+    .force{padding:14px}
+    .agent{padding:12px}
+    .arch::after{display:none}
+  }
+
+  /* ============================================================
+     CRITICAL OVERLAP FIXES — defensive last-pass
+     Addresses every overlap reported in mobile screenshots.
+     ============================================================ */
+  @media (max-width: 900px){
+    /* ROOT CAUSE: flex:1 on scene containers tried to fit in
+       remaining flex space; on mobile we want natural height so
+       the slide can scroll. */
+    .ns-scene,.scene,.pipeline,.bg-scene,.arch,
+    .northstar,.build-grid,.timeline,.grid-3,.grid-4,.bp-grid,
+    .agents,.assume-grid,.medallion{
+      flex:initial !important; min-height:auto !important;
+    }
+
+    /* Background-agent: drop grid entirely on mobile (was causing
+       implicit-column collisions because grid-column:2 children
+       were creating phantom columns). Switch to flex column. */
+    .bg-scene{
+      display:flex !important; flex-direction:column !important;
+      gap:14px !important;
+    }
+    .bg-event,.bg-agent,.bg-tools,.bg-verdict,.bg-actions,.bg-closer{
+      grid-column:auto !important; grid-row:auto !important; width:100%;
+    }
+
+    /* North-star scene: same — flex column on mobile, in document order */
+    .ns-scene{
+      display:flex !important; flex-direction:column !important;
+      gap:18px !important; align-items:stretch !important;
+    }
+    .ns-arrow-l,.ns-arrow-r{display:none}
+
+    /* Force-cards: height:100% + overflow:hidden was truncating text */
+    .force{height:auto !important; overflow:visible !important}
+
+    /* Phase timeline: height:100% caused same truncation */
+    .phase{height:auto; overflow:visible}
+
+    /* Chrome footer: hide the long label, keep logo + counter */
+    .chrome .brandmini span{display:none !important}
+
+    /* All inline display:flex panels (slides 17, 21 footer rows etc.):
+       force column on mobile so right-aligned pillrows don't overlap. */
+    [style*="display:flex"][style*="gap:24px"]{
+      flex-direction:column !important; align-items:stretch !important;
+      gap:14px !important;
+    }
+    [style*="display:flex"][style*="gap:24px"] > .pillrow{
+      align-items:flex-start !important; justify-content:flex-start !important;
+      flex-direction:row !important;
+    }
+
+    /* Architecture SVG — scale to fit viewport width, no horizontal scroll */
+    .arch{
+      align-items:flex-start !important; justify-content:center !important;
+      overflow:hidden !important; margin:0 !important; padding:8px 0 12px !important;
+    }
+    .arch svg{
+      min-width:0 !important; width:100% !important; max-width:100% !important;
+      height:auto !important; display:block;
+    }
+    .arch::after{display:none !important}
+
+    /* Slide vertical safety: clear nav-bar + chrome */
+    .slide{padding-bottom:88px !important}
+    .slide.cover{padding-bottom:88px !important}
+  }
+
+  /* ============================================================
+     STATIC MOBILE NAV BAR — replaces swipe-only navigation
+     ============================================================ */
+  .mobile-nav{display:none}
+  @media (max-width: 900px){
+    .mobile-nav{
+      display:flex; position:fixed; left:0; right:0; bottom:0; z-index:60;
+      align-items:center; justify-content:space-between; gap:10px;
+      padding:10px 14px;
+      background:rgba(10,10,14,.92);
+      -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+      border-top:1px solid var(--border-2);
+    }
+    .mnav-btn{
+      flex:1; min-height:44px;
+      background:var(--surface-2);
+      border:1px solid var(--border-brand);
+      color:var(--text);
+      font-family:'Onest',sans-serif;
+      font-size:14px; font-weight:600; letter-spacing:.04em;
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+      transition:transform .12s ease, background .15s ease;
+    }
+    .mnav-btn:active{background:var(--surface-3); transform:scale(.97)}
+    .mnav-btn:disabled,.mnav-btn.disabled{opacity:.35; cursor:not-allowed; border-color:var(--border-2)}
+    .mnav-count{
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px; color:var(--text-3);
+      letter-spacing:.12em;
+      min-width:78px; text-align:center;
+    }
+    /* hide the old chrome footer entirely on mobile — nav bar replaces it */
+    .chrome{display:none !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="bar" id="progressBar"></div></div>
+
+<div class="chrome">
+  <div class="brandmini"><img src="logo.png" alt="Lua"/><span>Lua · [CLIENT_NAME]</span></div>
+  <div class="count" id="slideCounter">01 / 21</div>
+</div>
+
+<div class="nav-zone left" onclick="prev()"></div>
+<div class="nav-arrow left" id="arrowLeft">‹</div>
+<div class="nav-zone right" onclick="next()"></div>
+<div class="nav-arrow right" id="arrowRight">›</div>
+
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Slide navigation">
+  <button class="mnav-btn" id="mnavPrev" onclick="prev()" aria-label="Previous slide or step">‹ Back</button>
+  <span class="mnav-count" id="mnavCount">01 / 21</span>
+  <button class="mnav-btn" id="mnavNext" onclick="next()" aria-label="Next slide or step">Next ›</button>
+</div>
+
+<div class="help-overlay" id="helpOverlay" onclick="this.classList.remove('show')">
+  <div class="help-card">
+    <h3>Keyboard navigation</h3>
+    <div class="row"><div><kbd>→</kbd><kbd>Space</kbd></div><div>Next slide</div></div>
+    <div class="row"><div><kbd>←</kbd></div><div>Previous slide</div></div>
+    <div class="row"><div><kbd>Home</kbd></div><div>First slide</div></div>
+    <div class="row"><div><kbd>End</kbd></div><div>Last slide</div></div>
+    <div class="row"><div><kbd>O</kbd></div><div>Overview grid</div></div>
+    <div class="row"><div><kbd>F</kbd></div><div>Fullscreen</div></div>
+    <div class="row"><div><kbd>P</kbd></div><div>Print all slides</div></div>
+    <div class="row"><div><kbd>?</kbd></div><div>This help</div></div>
+  </div>
+</div>
+
+<div class="overview" id="overview">
+  <h3>Slide overview</h3>
+  <div class="ov-section-label">Main pitch · 15 slides</div>
+  <div class="ov-grid" id="ovGridMain"></div>
+  <div class="ov-section-label">Architecture appendix · on demand</div>
+  <div class="ov-grid" id="ovGridAppendix"></div>
+</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide cover active" data-title="Cover">
+    <div class="brand-row"><img src="logo.png" alt="Lua"/><span>Lua · AI Agent Framework</span></div>
+    <div class="body">
+      <div class="eyebrow" style="margin-bottom:16px">Executive presentation · Azure-native architecture</div>
+      <h1>One question.<br/>Every system.<br/><span class="grad-text">Trusted answers.</span></h1>
+      <p class="lead" style="margin-top:24px">An Azure-native unified data and AI agent platform for [CLIENT_NAME].</p>
+    </div>
+    <div class="meta-grid">
+      <div><div class="k">Prepared for</div><div class="v">[CLIENT_CONTACT] · [CLIENT_NAME]</div></div>
+      <div><div class="k">Prepared by</div><div class="v">Lua · AI Agent Framework</div></div>
+      <div><div class="k">Foundation</div><div class="v">Microsoft Azure · Fabric · Foundry</div></div>
+      <div><div class="k">Outcome</div><div class="v">One agent endpoint · every system</div></div>
+    </div>
+  </section>
+
+  <!-- 2 · NORTH STAR ★ NEW -->
+  <section class="slide" data-title="The North Star">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">02 · The North Star · where we're heading</span></div>
+      <span class="section-num">02 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Any executive. Any question. <span class="grad-text">Every system.</span></h2>
+    <p class="lead" style="margin:10px 0 24px">
+      In four weeks, [CLIENT_NAME]'s leadership sees the first agent answering a cross-system question — asked in Arabic, by voice, through WhatsApp or any channel — with full lineage to source.
+    </p>
+
+    <div class="ns-scene">
+      <div class="ns-stage from">
+        <div class="ns-label">Asks · Egyptian Arabic · voice, image or text</div>
+        <div class="ns-bubble" dir="rtl" style="font-size:18px">"إيه الوحدات في الشروق اللي فاتت ميعاد التسليم، وإيه حجم المخاطر المالية؟"</div>
+        <div class="ns-bubble" style="font-size:13px;color:var(--text-3);padding:10px 16px;border-radius:10px">(English) "Which units in El Shorouk are past handover SLA, and what's the cost exposure?"</div>
+        <div class="ns-actors">CEO · CFO · CIO · Property · Finance · Compliance — <em>via WhatsApp, Slack, voice, email, web, or any channel</em></div>
+      </div>
+
+      <div class="ns-stack">
+        <div class="ns-layer agents">
+          <img src="logo.png" alt="Lua"/>
+          <div class="ns-layer-tag">What Lua delivers</div>
+          <div class="ns-layer-name">Lua AI Agents</div>
+          <div class="ns-layer-sub">built on the Lua framework · deployed on Azure AI Foundry</div>
+        </div>
+        <div class="ns-connector">Agent Gateway</div>
+        <div class="ns-layer platform">
+          <div class="ns-layer-tag">What you own</div>
+          <div class="ns-layer-name">Your AI-Ready Data Platform</div>
+          <div class="ns-layer-sub">Microsoft Azure · unified lake · AI mapping · hybrid retrieval · single agent gateway</div>
+        </div>
+      </div>
+
+      <div class="ns-stage to">
+        <div class="ns-label">Receives · in seconds</div>
+        <div class="ns-bubble"><strong>47 units · EGP 12.4M exposure</strong>Three contractors account for 72% of the breach. Lineage traceable to source records.</div>
+        <div class="ns-cites">
+          <span class="ns-cite">sap.fi.gl</span>
+          <span class="ns-cite">doors.contract</span>
+          <span class="ns-cite">sf.case</span>
+          <span class="ns-cite">purview://lineage</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ns-pledge">
+      Two layers, one outcome. <strong>We help you build your AI-ready data platform on Azure</strong> — it stays yours. <strong>Then Lua delivers the agents that answer the questions.</strong>
+    </div>
+  </section>
+
+  <!-- 3 · WHY THIS MATTERS · NORTH STARS -->
+  <section class="slide" data-title="Why this matters">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">03 · Why this matters for [CLIENT_NAME]</span></div>
+      <span class="section-num">03 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Four North Stars. <span class="grad-text">Same foundation. Same agents.</span></h2>
+    <p class="lead" style="margin:10px 0 24px">Each North Star in your Enterprise Blueprint is blocked by the same gap today — and unlocked by the AI-ready foundation we'll help you build, with Lua agents on top.</p>
+
+    <div class="northstar">
+
+      <div class="ns-pillar p1">
+        <span class="ns-tag purple">Platform Company</span>
+        <h3>Real Estate Development</h3>
+        <div class="ns-sub">Land · master plan · construction · snagging · Health, Safety &amp; Environment</div>
+        <div class="ns-row today">
+          <div class="ns-row-label">Today</div>
+          <p class="ns-row-text">11 capabilities · 7 unknowns · flagged "core business blind spot" in your blueprint.</p>
+        </div>
+        <div class="ns-row now">
+          <div class="ns-row-label">With Lua agents</div>
+          <p class="ns-row-text">"Show every land parcel acquired in 2025 with master plan, construction status, snagging backlog and contractors."</p>
+        </div>
+        <div class="ns-row-systems">
+          <span class="ns-syspill">Land</span><span class="ns-syspill">Project</span><span class="ns-syspill">Construction</span><span class="ns-syspill">Quality</span><span class="ns-syspill">Health &amp; Safety</span>
+        </div>
+      </div>
+
+      <div class="ns-pillar p2">
+        <span class="ns-tag magenta">Service Provider</span>
+        <h3>Property &amp; Community Ops</h3>
+        <div class="ns-sub">Maintenance · warranty · facilities · resident services</div>
+        <div class="ns-row today">
+          <div class="ns-row-label">Today</div>
+          <p class="ns-row-text">80% of CHUM is undocumented · warranty obligations scattered across Theqa, SAP and CS Ticketing.</p>
+        </div>
+        <div class="ns-row now">
+          <div class="ns-row-label">With Lua agents</div>
+          <p class="ns-row-text">"Which units have open maintenance tickets past SLA, and which warranty obligations are at risk?"</p>
+        </div>
+        <div class="ns-row-systems">
+          <span class="ns-syspill">CS Ticketing</span><span class="ns-syspill">CHUM</span><span class="ns-syspill">Theqa</span><span class="ns-syspill">SAP MM</span>
+        </div>
+      </div>
+
+      <div class="ns-pillar p3">
+        <span class="ns-tag red">Regional Expansion</span>
+        <h3>Saudi Arabia · Middle East · International</h3>
+        <div class="ns-sub">Subsidiary deployment · portable data contracts</div>
+        <div class="ns-row today">
+          <div class="ns-row-label">Today</div>
+          <p class="ns-row-text">Each new market needs months of integration before any agent or analytics can be useful — every subsidiary diverges.</p>
+        </div>
+        <div class="ns-row now">
+          <div class="ns-row-label">With Lua agents</div>
+          <p class="ns-row-text">A Doors deployment in Saudi Arabia inherits the industry-standard (OSCRE) data contracts. Agents work on day one.</p>
+        </div>
+        <div class="ns-row-systems">
+          <span class="ns-syspill">Doors KSA</span><span class="ns-syspill">Industry Data Model</span><span class="ns-syspill">Multi-entity</span>
+        </div>
+      </div>
+
+      <div class="ns-pillar p4">
+        <span class="ns-tag orange">Compliance &amp; Data Maturity</span>
+        <h3>Regulatory, ESG, Audit</h3>
+        <div class="ns-sub">FRA · PDPL · EGX · carbon · know-your-customer</div>
+        <div class="ns-row today">
+          <div class="ns-row-label">Today</div>
+          <p class="ns-row-text">Financial Regulatory Authority filings, Personal Data Protection Law impact reports, Egyptian Exchange disclosures and carbon reports are each a project — manual reconciliation across systems, partial audit trails.</p>
+        </div>
+        <div class="ns-row now">
+          <div class="ns-row-label">With Lua agents</div>
+          <p class="ns-row-text">"Generate Q1 Personal Data Protection Law impact report" — agent assembles every changed record with full Purview lineage.</p>
+        </div>
+        <div class="ns-row-systems">
+          <span class="ns-syspill">FRA</span><span class="ns-syspill">PDPL</span><span class="ns-syspill">EGX</span><span class="ns-syspill">ESG</span><span class="ns-syspill">KYC</span><span class="ns-syspill">Carbon</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4 · THE ONE BLOCKER -->
+  <section class="slide" data-title="The one blocker">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">04 · The one blocker · stated factually</span></div>
+      <span class="section-num">04 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Six pillars. Thirty-one systems. <span class="grad-text">One un-unified truth.</span></h2>
+    <p class="lead" style="margin:10px 0 24px">Your numbers tell the story before any consultant does. The blueprint your team wrote already named the gap.</p>
+
+    <div class="grid-4" style="margin-bottom:28px">
+      <div class="kpi critical"><div class="n">33.5k</div><div class="l">records actively broken — duplicates, invalid IDs, missing IDs, wrong customer due-diligence (KYC), pending merges</div></div>
+      <div class="kpi"><div class="n">57.4k</div><div class="l">further records flagged for revalidation — valid IDs, ownership unverified</div></div>
+      <div class="kpi critical"><div class="n">1 / 5</div><div class="l">Master Data maturity score — <em>the</em> blocker to every North Star</div></div>
+      <div class="kpi"><div class="n">31</div><div class="l">systems in landscape — 6 with critical gaps, 16 with unknown architecture</div></div>
+    </div>
+
+    <div class="grid-2" style="gap:32px;flex:1;min-height:0">
+      <div class="panel brand">
+        <div class="eyebrow">Why it has not been solved</div>
+        <h3 style="margin:8px 0 12px">Three structural reasons.</h3>
+        <p><strong>1 · No single owner.</strong> Customer, property, unit and contract identities exist in fragments across CRM, ERP and four subsidiary stacks. Each locally consistent, globally divergent.</p>
+        <p><strong>2 · Deterministic matching cannot scale.</strong> Exact-string and exact-ID rules cannot resolve transliterated names, partial addresses, or merged-entity histories at your volume.</p>
+        <p style="margin:0"><strong>3 · No semantic surface for AI.</strong> Cleansed tables alone do not answer cross-system questions. Agents need relationships and lineage as first-class citizens.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:18px">
+        <blockquote>MDM blocks all North Stars — no system exists.<cite>[CLIENT_NAME] · Enterprise Blueprint</cite></blockquote>
+        <div class="pillrow">
+          <span class="pill">Master Data 1/5</span><span class="pill">Identity &amp; Access 1/5</span><span class="pill">Data Governance 1/5</span>
+          <span class="pill">Multi-entity finance 1/5</span><span class="pill">Cyber 2/5</span><span class="pill">CHUM 80% undocumented</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · WHAT WE'RE BUILDING ★ NEW -->
+  <section class="slide" data-title="What we're building">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">05 · What we're building · in plain English</span></div>
+      <span class="section-num">05 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Four building blocks. <span class="grad-text">That's your AI-ready foundation.</span></h2>
+    <p class="lead" style="margin:10px 0 24px">
+      We are not adding 31 more systems. We help you add one governed layer above the 31 you already have. It becomes your platform — the substrate Lua agents will speak to. Four parts. Each one answers a specific question.
+    </p>
+
+    <div class="build-grid">
+      <div class="build-card">
+        <div class="bc-num">01</div>
+        <div class="bc-title">One lake</div>
+        <p class="bc-sub">Every record from every system — SAP, Salesforce, Odoo, the four subsidiary ERPs, the document estate — copied into one governed place. Originals stay where they are; the lake is a read-side mirror.</p>
+        <div class="bc-tag">Question · "Where does the data live?"</div>
+      </div>
+      <div class="build-card">
+        <div class="bc-num">02</div>
+        <div class="bc-title">AI mapping</div>
+        <p class="bc-sub">Records that mean the same thing become one. "Mohammed Ali" in SAP, "محمد" in Odoo, "Mohamed A." in Salesforce — recognised, merged, audited. 33,500 broken records become one trusted master.</p>
+        <div class="bc-tag">Question · "Which truth is the truth?"</div>
+      </div>
+      <div class="build-card">
+        <div class="bc-num">03</div>
+        <div class="bc-title">Hybrid retrieval</div>
+        <p class="bc-sub">Search finds similar things. A graph traverses relationships. Together they answer questions neither could alone — "which units, in which community, owned by whom, under which contract, with what risk?"</p>
+        <div class="bc-tag">Question · "How do agents find anything?"</div>
+      </div>
+      <div class="build-card">
+        <div class="bc-num">04</div>
+        <div class="bc-title">One endpoint</div>
+        <p class="bc-sub">Every agent — built by your team, by partners, off-the-shelf — speaks one protocol to one endpoint, with one identity, one audit log, one policy regime. Add a data source: every agent gets it.</p>
+        <div class="bc-tag">Question · "How do agents reach the data, safely?"</div>
+      </div>
+    </div>
+
+    <div class="ns-pledge" style="margin-top:24px">
+      One lake. One mapping. One retrieval surface. One endpoint. <strong>Together: your AI-ready foundation — the substrate Lua agents will live on.</strong>
+    </div>
+  </section>
+
+  <!-- 6 · LIVE · CONVERSATIONAL AGENT (was 13) -->
+  <section class="slide" data-title="Agent query · live">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">06 · Live · conversational agent · one question, every system</span></div>
+      <span class="section-num">06 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Watch the Property Agent <span class="grad-text">resolve a cross-system question</span> end to end.</h2>
+    <p class="lead" style="margin:10px 0 18px">A real [CLIENT_NAME] question — asked in Arabic, by voice, through WhatsApp. The agent decomposes it, calls four data tools through the agent gateway, and returns an answer with citation lineage — all in seconds, all governed.</p>
+
+    <div class="scene" data-steps="4" data-step="1">
+      <div class="step-progress">
+        <span class="sp-dot on"></span><span class="sp-dot"></span><span class="sp-dot"></span><span class="sp-dot"></span>
+        <span class="sp-hint">→ click to advance</span>
+      </div>
+
+      <div class="qbox" data-stage="1">
+        <div class="qlabel">User · voice via WhatsApp · Egyptian Arabic</div>
+        <div class="qtext ar"><span class="typewrite">إيه الوحدات في الشروق اللي اتأخرت أكتر من 90 يوم عن التسليم، وإيه حجم المخاطر المالية؟</span></div>
+        <div class="qtext en" style="margin-top:6px">Which units in El Shorouk are 90+ days past handover SLA, and what is the cost exposure?</div>
+      </div>
+
+      <div class="think" data-stage="2">
+        <span class="thinkpill">▸ identify community: <em style="color:var(--magenta)">El Shorouk</em></span>
+        <span class="thinkpill">▸ find units with handover deadline</span>
+        <span class="thinkpill">▸ filter SLA breach &gt; 90 days</span>
+        <span class="thinkpill">▸ sum financial exposure</span>
+      </div>
+
+      <div class="tools-stream" data-stage="3">
+        <div class="tcall"><span class="tkw">Tool →</span><span class="tcode">search_unified(entity: "unit", community: "El Shorouk", status: "handover_pending")</span><span class="tres">312 hits · 18ms</span></div>
+        <div class="tcall"><span class="tkw">Tool →</span><span class="tcode">query_graph(MATCH (u:Unit)-[:HAS]-&gt;(h:Handover) WHERE h.due &lt; now()-90)</span><span class="tres">47 units · 41ms</span></div>
+        <div class="tcall"><span class="tkw">Tool →</span><span class="tcode">resolve_entity(unit_ids: [...47], join: ["sap.fi", "doors.contract", "sf.case"])</span><span class="tres">47 / 47 resolved · 88ms</span></div>
+        <div class="tcall"><span class="tkw">Tool →</span><span class="tcode">get_lineage(query_id: "q_492a") · audit trail · Purview-backed</span><span class="tres">lineage ✓ · 12ms</span></div>
+      </div>
+
+      <div class="answer" data-stage="4">
+        <div class="alabel">Agent · resolved answer · delivered via WhatsApp voice + summary card</div>
+        <div class="atext"><strong>47 units</strong> in El Shorouk are past SLA by 90+ days. Total cost exposure <strong>EGP 12.4M</strong> — penalties EGP 8.2M, contractor disputes EGP 3.1M, snagging rework EGP 1.1M. Three contractors account for 72% of the breach.</div>
+        <div class="citations">
+          <span class="cite">sap.fi.gl</span><span class="cite">doors.contract.v2</span><span class="cite">sf.case.handover</span><span class="cite">graph.unit→handover→contract</span><span class="cite">purview://lineage/q_492a</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · LIVE · BACKGROUND AGENT (was 14) -->
+  <section class="slide" data-title="Background agent · live">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">07 · Live · background agent triggered by an event</span></div>
+      <span class="section-num">07 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Some agents wait to be asked. <span class="grad-text">Others never stop watching.</span></h2>
+    <p class="lead" style="margin:10px 0 18px">
+      A new customer lands in Salesforce. No one prompts the platform. The Customer Due-Diligence agent picks up the event, enriches the record across every system, makes a decision, and acts — with full lineage. All in under five seconds, around the clock.
+    </p>
+
+    <div class="bg-scene" data-steps="5" data-step="1">
+      <div class="step-progress">
+        <span class="sp-dot on"></span><span class="sp-dot"></span><span class="sp-dot"></span><span class="sp-dot"></span><span class="sp-dot"></span>
+        <span class="sp-hint">→ click to advance</span>
+      </div>
+
+      <div class="bg-event" data-stage="1">
+        <div class="evtpulse"></div>
+        <div class="evtlabel">Event · Salesforce</div>
+        <div class="evttext">New customer created — "Ahmed Hassan"</div>
+        <div class="evtmeta">14:32:17 · Cairo · auto-published to Event Hubs</div>
+      </div>
+      <div class="bg-agent" data-stage="2">
+        <div class="aicon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M8 12.5l2.5 2.5L16 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div>
+          <div class="aname">Customer Due-Diligence Agent</div>
+          <div class="asub">Subscribed to "new customer" events · running on Azure Foundry · no human prompt</div>
+        </div>
+        <div class="astatus">active</div>
+      </div>
+      <div class="bg-tools" data-stage="3">
+        <div class="tlabel">Autonomous tool calls · via the agent gateway</div>
+        <div class="tcall"><span class="tkw">→</span><span class="tcode">resolve_entity · check for duplicates across SAP, Salesforce, Odoo</span><span class="tres">2 possible matches · 22ms</span></div>
+        <div class="tcall"><span class="tkw">→</span><span class="tcode">search_unified · scan anti-money-laundering, sanctions &amp; politically-exposed-persons watchlists</span><span class="tres">0 hits · 54ms</span></div>
+        <div class="tcall"><span class="tkw">→</span><span class="tcode">query_graph · trace subsidiary &amp; corporate relationships</span><span class="tres">linked to Doors Group · 38ms</span></div>
+        <div class="tcall"><span class="tkw">→</span><span class="tcode">get_lineage · pull financial history &amp; prior dealings</span><span class="tres">clean history · 19ms</span></div>
+      </div>
+      <div class="bg-verdict" data-stage="4">
+        <div class="vlabel">Decision · automated</div>
+        <div class="vresult">Due-diligence <span class="grad-text">PASS</span> · 87 / 100</div>
+        <div class="vmeta">No watchlist hits · clean history · existing subsidiary relationship. Auto-enrich record. No human review required.</div>
+      </div>
+      <div class="bg-actions" data-stage="5">
+        <div class="alabel">Actions taken · in 4.2 seconds</div>
+        <ul>
+          <li>Salesforce record enriched — unified-customer ID linked, due-diligence stamp applied</li>
+          <li>SAP customer master updated with verified national ID</li>
+          <li>Audit trail written to Purview — every step traceable</li>
+          <li>Compliance team notified in Teams — for visibility, not approval</li>
+        </ul>
+      </div>
+      <div class="bg-closer" data-stage="5">
+        <span class="pill brand dot">0 prompts</span>
+        <span class="pill dot">4 systems updated</span>
+        <span class="pill brand dot">1 audit trail</span>
+        <span class="pill dot">always-on · 24 / 7</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · LIVE · DATA PIPELINE (was 9) -->
+  <section class="slide" data-title="Pipeline · live flow">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">08 · Live flow · how data transforms from source to agent gateway</span></div>
+      <span class="section-num">08 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>One customer. Three systems. <span class="grad-text">One trusted profile.</span></h2>
+    <p class="lead" style="margin:10px 0 8px">
+      Follow a single customer — Mohammed Ali — through the platform. He exists in SAP, Salesforce and Odoo today, in three different spellings, with conflicting details. Watch the platform turn that into one trusted profile every agent can use.
+    </p>
+
+    <div class="pipeline" data-steps="5" data-step="1">
+      <div class="step-progress">
+        <span class="sp-dot on"></span><span class="sp-dot"></span><span class="sp-dot"></span><span class="sp-dot"></span><span class="sp-dot"></span>
+        <span class="sp-hint">→ click to advance</span>
+      </div>
+      <div class="stations">
+        <div class="station-line"></div>
+        <div class="station" data-stage="1"><div class="dot">01</div><div class="name">Today's systems</div><div class="sub">Same person<br/>three records</div></div>
+        <div class="station" data-stage="2"><div class="dot">02</div><div class="name">Copied to Azure</div><div class="sub">Lifted into the lake<br/>nothing changed</div></div>
+        <div class="station" data-stage="3"><div class="dot">03</div><div class="name">Recognised</div><div class="sub">AI spots the match<br/>across languages</div></div>
+        <div class="station" data-stage="4"><div class="dot">04</div><div class="name">Unified profile</div><div class="sub">One trusted record<br/>full audit trail</div></div>
+        <div class="station" data-stage="5"><div class="dot">05</div><div class="name">Ready for agents</div><div class="sub">Every agent sees<br/>the same answer</div></div>
+      </div>
+
+      <div class="data-cards">
+        <div class="dcard" data-stage="1">
+          <div class="dhead"><span>Source · today</span><span class="badge">3 systems</span></div>
+          <div class="row lead">SAP says</div>
+          <div class="row">"محمد علي"</div>
+          <div class="row dim">tax ID: 100-***-841</div>
+          <div class="row lead" style="margin-top:8px">Salesforce says</div>
+          <div class="row">"Mohammed Ali"</div>
+          <div class="row warn">tax ID: 100-***-841 ⚠</div>
+          <div class="row lead" style="margin-top:8px">Odoo says</div>
+          <div class="row">"Mohamed A."</div>
+          <div class="row warn">tax ID: missing ⚠</div>
+        </div>
+        <div class="dcard" data-stage="2">
+          <div class="dhead"><span>Ingest</span><span class="badge">live stream</span></div>
+          <div class="row lead">Each record is copied<br/>into the Azure data lake</div>
+          <div class="row dim" style="margin-top:8px">— nothing is changed</div>
+          <div class="row dim">— nothing is deleted</div>
+          <div class="row dim">— originals untouched</div>
+          <div class="row ok" style="margin-top:10px">↻ Live · 1,247 records/sec</div>
+          <div class="row dim">Lineage to source: tracked</div>
+        </div>
+        <div class="dcard" data-stage="3">
+          <div class="dhead"><span>AI mapping</span><span class="badge">vector match</span></div>
+          <div class="row lead">The platform reads<br/>the meaning of each record</div>
+          <div class="row" style="margin-top:8px">"محمد", "Mohammed", "Mohamed"</div>
+          <div class="row ok">→ all the same person</div>
+          <div class="row" style="margin-top:8px">Tax IDs align across SAP &amp; SF</div>
+          <div class="row ok">→ confidence: 97%</div>
+          <div class="row dim" style="margin-top:8px">Edge cases → human steward</div>
+        </div>
+        <div class="dcard" data-stage="4">
+          <div class="dhead"><span>Unified profile</span><span class="badge">OSCRE</span></div>
+          <div class="row lead">One trusted customer record</div>
+          <div class="row k">Name</div>
+          <div class="row">Mohammed Ali</div>
+          <div class="row k">Owns</div>
+          <div class="row">Unit B7-U4, El Shorouk</div>
+          <div class="row k">Subsidiary</div>
+          <div class="row">Doors</div>
+          <div class="row ok" style="margin-top:8px">✓ Auditable to 3 sources</div>
+        </div>
+        <div class="dcard" data-stage="5">
+          <div class="dhead"><span>Agent gateway · response</span><span class="badge">agent-ready</span></div>
+          <div class="row lead">Any agent can now ask</div>
+          <div class="row" style="margin-top:8px;font-style:italic">"Find Mohammed Ali"</div>
+          <div class="row ok" style="margin-top:8px">→ One answer · one record</div>
+          <div class="row ok">→ 97% confidence</div>
+          <div class="row ok">→ Lineage on request</div>
+          <div class="row dim" style="margin-top:8px">Every team · same truth</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;display:flex;justify-content:center;gap:12px">
+        <span class="pill brand dot">3 systems · 3 spellings</span>
+        <span class="pill dot">→ 1 trusted profile</span>
+        <span class="pill brand dot">→ every agent sees the same truth</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · WHY NOW (was 15) -->
+  <section class="slide" data-title="Why now">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">09 · Why now · 2026 makes this buildable</span></div>
+      <span class="section-num">09 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>2026 is the first year this is <span class="grad-text">buildable end-to-end</span> on supported services.</h2>
+    <p class="lead" style="margin:10px 0 24px">Three Microsoft-shipped capabilities that arrived in the last year. Each removes a category of bespoke risk — making the 4-week sprint possible.</p>
+
+    <div class="grid-3" style="flex:1;min-height:0">
+      <div class="force">
+        <div class="yr">Feb 2026</div>
+        <h4>AI-native Master Data Management</h4>
+        <p>Profisee 2026.R1 added AI Similarity Matching using vector embeddings — the first Master Data Management technique that resolves records meaning the same thing while looking different.</p>
+        <p style="color:var(--text-muted);font-size:13px;margin:auto 0 0">Directly addresses your 33,500 broken-record problem without rule-engine maintenance.</p>
+      </div>
+      <div class="force">
+        <div class="yr">Live · 2025</div>
+        <h4>One agent gateway, every agent</h4>
+        <p>Microsoft shipped agent-gateway support — the Model Context Protocol — inside Azure API Management in 2025, with API Center as the enterprise registry of agent endpoints.</p>
+        <p style="color:var(--text-muted);font-size:13px;margin:auto 0 0">The "single endpoint for all agents" is now a first-class Microsoft pattern — not custom integration.</p>
+      </div>
+      <div class="force">
+        <div class="yr">Live · 2026</div>
+        <h4>Graph + vector together</h4>
+        <p>Microsoft GraphRAG combined with Azure AI Search hybrid retrieval is now Microsoft's recommended pattern for cross-system enterprise Q&amp;A.</p>
+        <p style="color:var(--text-muted);font-size:13px;margin:auto 0 0">Up to 3× accuracy gains on connected-evidence questions — the exact shape of question Madinet's agents answer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · THE ARCHITECTURE (was 5) -->
+  <section class="slide" data-title="Architecture">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">10 · The architecture · for the CIO</span></div>
+      <span class="section-num">10 / 21</span>
+    </div>
+    <hr class="grad-line" style="margin-bottom:8px"/>
+    <div class="arch">
+      <svg viewBox="0 0 1200 940" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stop-color="#995FF8"/><stop offset="33%" stop-color="#F633A2"/>
+            <stop offset="66%" stop-color="#FF0342"/><stop offset="100%" stop-color="#FF8A00"/>
+          </linearGradient>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F633A2"/></marker>
+          <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FFFFFF" opacity=".4"/></marker>
+        </defs>
+        <style>
+          .lab{font-family:'Onest',sans-serif;font-size:11px;fill:#FFF;font-weight:500}
+          .lab-d{font-family:'Onest',sans-serif;font-size:11px;fill:rgba(255,255,255,.65);font-weight:500}
+          .sm{font-family:'Onest',sans-serif;font-size:10px;fill:rgba(255,255,255,.55)}
+          .mono{font-family:'JetBrains Mono',monospace;font-size:10px;fill:rgba(255,255,255,.45)}
+          .tit{font-family:'Onest',sans-serif;font-size:15px;fill:#FFF;font-weight:600}
+          .ey{font-family:'Onest',sans-serif;font-size:9px;fill:#F633A2;letter-spacing:.18em;font-weight:600;text-transform:uppercase}
+        </style>
+
+        <rect x="0" y="40" width="40" height="860" fill="#0F0F18"/>
+        <text class="ey" x="-460" y="22" transform="rotate(-90)" text-anchor="middle">Purview · Entra · Private Endpoints · CMK · Defender</text>
+
+        <rect x="60" y="40" width="1100" height="140" fill="#16161E" stroke="rgba(255,255,255,.08)"/>
+        <text class="ey" x="76" y="62">01 · Source systems</text>
+        <text class="tit" x="76" y="82">[CLIENT_NAME] application landscape</text>
+        <g>
+          <rect x="76" y="98" width="118" height="32" fill="#1F1F2A" stroke="rgba(246,51,162,.4)"/><text class="lab" x="135" y="118" text-anchor="middle">SAP S/4 · FICO</text>
+          <rect x="200" y="98" width="118" height="32" fill="#1F1F2A" stroke="rgba(246,51,162,.4)"/><text class="lab" x="259" y="118" text-anchor="middle">Salesforce CRM</text>
+          <rect x="324" y="98" width="118" height="32" fill="#1F1F2A" stroke="rgba(246,51,162,.4)"/><text class="lab" x="383" y="118" text-anchor="middle">SuccessFactors</text>
+          <rect x="448" y="98" width="118" height="32" fill="#1F1F2A" stroke="rgba(246,51,162,.4)"/><text class="lab" x="507" y="118" text-anchor="middle">Doors · Odoo</text>
+          <rect x="572" y="98" width="118" height="32" fill="#1F1F2A" stroke="rgba(246,51,162,.4)"/><text class="lab" x="631" y="118" text-anchor="middle">CHUM · CStack</text>
+          <rect x="696" y="98" width="118" height="32" fill="#1F1F2A" stroke="rgba(246,51,162,.4)"/><text class="lab" x="755" y="118" text-anchor="middle">Finishing CStack</text>
+          <rect x="820" y="98" width="118" height="32" fill="#1F1F2A" stroke="rgba(246,51,162,.4)"/><text class="lab" x="879" y="118" text-anchor="middle">MuleSoft iPaaS</text>
+          <rect x="944" y="98" width="118" height="32" fill="#1F1F2A" stroke="rgba(246,51,162,.4)"/><text class="lab" x="1003" y="118" text-anchor="middle">Power BI</text>
+          <rect x="76" y="138" width="118" height="32" fill="#14141A" stroke="rgba(255,255,255,.08)"/><text class="lab-d" x="135" y="158" text-anchor="middle">LaserFiche</text>
+          <rect x="200" y="138" width="118" height="32" fill="#14141A" stroke="rgba(255,255,255,.08)"/><text class="lab-d" x="259" y="158" text-anchor="middle">Archdesk</text>
+          <rect x="324" y="138" width="118" height="32" fill="#14141A" stroke="rgba(255,255,255,.08)"/><text class="lab-d" x="383" y="158" text-anchor="middle">Azure OCR</text>
+          <rect x="448" y="138" width="118" height="32" fill="#14141A" stroke="rgba(255,255,255,.08)"/><text class="lab-d" x="507" y="158" text-anchor="middle">CS Ticketing</text>
+          <rect x="572" y="138" width="118" height="32" fill="#14141A" stroke="rgba(255,255,255,.08)"/><text class="lab-d" x="631" y="158" text-anchor="middle">Touba App</text>
+          <rect x="696" y="138" width="118" height="32" fill="#14141A" stroke="rgba(255,255,255,.08)"/><text class="lab-d" x="755" y="158" text-anchor="middle">SAFE Platform</text>
+          <rect x="820" y="138" width="118" height="32" fill="#14141A" stroke="rgba(255,255,255,.08)"/><text class="lab-d" x="879" y="158" text-anchor="middle">Theqa</text>
+          <rect x="944" y="138" width="118" height="32" fill="#14141A" stroke="rgba(255,255,255,.08)"/><text class="lab-d" x="1003" y="158" text-anchor="middle">External</text>
+        </g>
+
+        <rect x="60" y="200" width="1100" height="80" fill="#14141A" stroke="rgba(255,255,255,.08)"/>
+        <text class="ey" x="76" y="222">02 · Ingestion</text>
+        <text class="tit" x="76" y="244">Azure Data Factory · Fabric Mirroring · Event Hubs</text>
+        <g>
+          <rect x="430" y="232" width="180" height="36" fill="#1F1F2A" stroke="rgba(255,255,255,.14)"/><text class="lab" x="520" y="254" text-anchor="middle">SAP CDC · ODP OData</text>
+          <rect x="620" y="232" width="180" height="36" fill="#1F1F2A" stroke="rgba(255,255,255,.14)"/><text class="lab" x="710" y="254" text-anchor="middle">Salesforce V2 · Bulk API</text>
+          <rect x="810" y="232" width="180" height="36" fill="#1F1F2A" stroke="rgba(255,255,255,.14)"/><text class="lab" x="900" y="254" text-anchor="middle">SHIR · REST · ODBC</text>
+        </g>
+        <line x1="600" y1="180" x2="600" y2="200" stroke="rgba(255,255,255,.4)" stroke-width="1" marker-end="url(#ar2)"/>
+
+        <rect x="60" y="300" width="1100" height="230" fill="#14141A" stroke="rgba(255,255,255,.08)"/>
+        <text class="ey" x="76" y="322">03 · Unified lake</text>
+        <text class="tit" x="76" y="344">Microsoft Fabric · OneLake · medallion</text>
+        <rect x="76" y="362" width="340" height="150" fill="#1A1A22" stroke="#A86A3D"/>
+        <text class="ey" x="92" y="384" style="fill:#D89968">Bronze · raw landings</text>
+        <text class="tit" x="92" y="406">As-is mirrors per source</text>
+        <text class="sm" x="92" y="426">— SAP delta · Salesforce objects</text>
+        <text class="sm" x="92" y="442">— Odoo · CStack · Touba · SAFE</text>
+        <text class="sm" x="92" y="458">— LaserFiche · Archdesk binaries</text>
+        <text class="sm" x="92" y="474">— Eventstream / Fabric Mirroring</text>
+        <text class="mono" x="92" y="498">Delta Parquet · partitioned</text>
+        <rect x="430" y="362" width="340" height="150" fill="#1A1A22" stroke="#995FF8"/>
+        <text class="ey" x="446" y="384" style="fill:#C6A8FF">Silver · AI mapping</text>
+        <text class="tit" x="446" y="406">Cleansed · resolved · canonical</text>
+        <text class="sm" x="446" y="426">— Profisee 2026.R1 AI Similarity</text>
+        <text class="sm" x="446" y="442">— Vector-embedding resolution</text>
+        <text class="sm" x="446" y="458">— Azure OpenAI semantic map</text>
+        <text class="sm" x="446" y="474">— Survivorship · steward queue</text>
+        <text class="mono" x="446" y="498">Golden record · audit · lineage</text>
+        <rect x="784" y="362" width="360" height="150" fill="url(#g1)" opacity="0.12" stroke="#F633A2"/>
+        <rect x="784" y="362" width="360" height="150" fill="none" stroke="#F633A2"/>
+        <text class="ey" x="800" y="384">Gold · business-ready</text>
+        <text class="tit" x="800" y="406">Customer · Property · Unit 360</text>
+        <text class="sm" x="800" y="426">— OSCRE Industry Data Model</text>
+        <text class="sm" x="800" y="442">— Multi-entity finance · ESG · KYC</text>
+        <text class="sm" x="800" y="458">— Subsidiary-aware</text>
+        <text class="sm" x="800" y="474">— Consumable BI · AI Search · Graph</text>
+        <text class="mono" x="800" y="498">Domain-modelled · contract-stable</text>
+        <line x1="416" y1="437" x2="430" y2="437" stroke="#F633A2" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="770" y1="437" x2="784" y2="437" stroke="#F633A2" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="246" y1="280" x2="246" y2="362" stroke="rgba(255,255,255,.4)" stroke-width="1" marker-end="url(#ar2)"/>
+
+        <rect x="60" y="550" width="1100" height="150" fill="#14141A" stroke="rgba(255,255,255,.08)"/>
+        <text class="ey" x="76" y="572">04 · Hybrid retrieval</text>
+        <text class="tit" x="76" y="594">Azure AI Search  +  Knowledge Graph (GraphRAG)</text>
+        <rect x="76" y="610" width="520" height="78" fill="#1A1A22" stroke="rgba(246,51,162,.4)"/>
+        <text class="tit" x="96" y="634">Azure AI Search</text>
+        <text class="sm" x="96" y="650">Hybrid: BM25 · vector · semantic reranker</text>
+        <text class="sm" x="96" y="666">Skillsets over LaserFiche · Archdesk · OCR</text>
+        <text class="sm" x="96" y="682">Entra ID document-level security trimming</text>
+        <rect x="612" y="610" width="532" height="78" fill="#1A1A22" stroke="rgba(246,51,162,.4)"/>
+        <text class="tit" x="632" y="634">Knowledge Graph · Neo4j AuraDB / Cosmos NoSQL</text>
+        <text class="sm" x="632" y="650">Relationships: Customer ↔ Unit ↔ Property ↔ Contract</text>
+        <text class="sm" x="632" y="666">Microsoft GraphRAG · community detection</text>
+        <text class="sm" x="632" y="682">Cypher · Agent Framework Context Provider</text>
+        <line x1="336" y1="512" x2="336" y2="610" stroke="#F633A2" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="876" y1="512" x2="876" y2="610" stroke="#F633A2" stroke-width="1.5" marker-end="url(#ar)"/>
+
+        <rect x="60" y="720" width="1100" height="68" fill="url(#g1)" opacity=".18"/>
+        <rect x="60" y="720" width="1100" height="68" fill="none" stroke="#F633A2"/>
+        <text class="ey" x="76" y="742">05 · The one endpoint</text>
+        <text class="tit" x="76" y="762">Azure API Management · MCP Gateway · OAuth + Entra</text>
+        <g>
+          <rect x="560" y="734" width="138" height="32" fill="#0A0A0E" stroke="#F633A2"/><text class="lab" x="629" y="754" text-anchor="middle">search_unified</text>
+          <rect x="704" y="734" width="138" height="32" fill="#0A0A0E" stroke="#F633A2"/><text class="lab" x="773" y="754" text-anchor="middle">query_graph</text>
+          <rect x="848" y="734" width="138" height="32" fill="#0A0A0E" stroke="#F633A2"/><text class="lab" x="917" y="754" text-anchor="middle">resolve_entity</text>
+          <rect x="992" y="734" width="158" height="32" fill="#0A0A0E" stroke="#F633A2"/><text class="lab" x="1071" y="754" text-anchor="middle">get_lineage</text>
+        </g>
+        <line x1="336" y1="688" x2="336" y2="720" stroke="#F633A2" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="876" y1="688" x2="876" y2="720" stroke="#F633A2" stroke-width="1.5" marker-end="url(#ar)"/>
+
+        <rect x="60" y="808" width="1100" height="112" fill="#0F0F18" stroke="rgba(255,255,255,.08)"/>
+        <text class="ey" x="76" y="830">06 · Agents</text>
+        <text class="tit" x="76" y="852">Azure AI Foundry · Agent Framework 1.0 · Lua</text>
+        <g>
+          <rect x="76" y="868" width="172" height="40" fill="#1A1A22" stroke="#F633A2"/><text class="lab" x="162" y="884" text-anchor="middle">Property Agent</text><text class="sm" x="162" y="900" text-anchor="middle">Lua · MCP consumer</text>
+          <rect x="258" y="868" width="172" height="40" fill="#1A1A22" stroke="#F633A2"/><text class="lab" x="344" y="884" text-anchor="middle">Customer Agent</text><text class="sm" x="344" y="900" text-anchor="middle">KYC · 360 view</text>
+          <rect x="440" y="868" width="172" height="40" fill="#1A1A22" stroke="#F633A2"/><text class="lab" x="526" y="884" text-anchor="middle">Finance Agent</text><text class="sm" x="526" y="900" text-anchor="middle">Multi-entity close</text>
+          <rect x="622" y="868" width="172" height="40" fill="#1A1A22" stroke="#F633A2"/><text class="lab" x="708" y="884" text-anchor="middle">HR / People</text><text class="sm" x="708" y="900" text-anchor="middle">SF + CStack unified</text>
+          <rect x="804" y="868" width="172" height="40" fill="#1A1A22" stroke="#F633A2"/><text class="lab" x="890" y="884" text-anchor="middle">Compliance</text><text class="sm" x="890" y="900" text-anchor="middle">ESG · FRA · PDPL</text>
+          <rect x="986" y="868" width="172" height="40" fill="url(#g1)"/><text class="lab" x="1072" y="884" text-anchor="middle" style="fill:#0A0A0E;font-weight:700">Orchestrator</text><text class="sm" x="1072" y="900" text-anchor="middle" style="fill:rgba(10,10,14,.7)">human-in-the-loop</text>
+        </g>
+        <line x1="600" y1="788" x2="600" y2="808" stroke="#F633A2" stroke-width="1.5" marker-end="url(#ar)"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 11 · 4-WEEK SPRINT (was 16) -->
+  <section class="slide" data-title="The how">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">11 · The how · 4-week proof-of-value sprint</span></div>
+      <span class="section-num">11 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Four weeks. <span class="grad-text">One demonstrable agent.</span></h2>
+    <p class="lead" style="margin:10px 0 16px">Every week ends with a working artefact — not a slide. A focused 4-week sprint that earns the next phase.</p>
+
+    <div class="timeline" style="grid-template-columns:repeat(4,1fr)">
+      <div class="phase">
+        <div class="ph-num">W1</div><div class="ph-name">Foundations</div><div class="ph-when">Week 1 · live</div>
+        <ul><li>Subscription · landing zone · Entra ID</li><li>Purview · Defender baselines</li><li>Private Endpoints · customer-managed keys · Key Vault</li><li>Fabric F64 · AI Search S2</li><li>Agent gateway shell on Azure API Management</li></ul>
+      </div>
+      <div class="phase">
+        <div class="ph-num">W2</div><div class="ph-name">Lift &amp; resolve</div><div class="ph-when">Week 2 · live</div>
+        <ul><li>SAP + Salesforce → Bronze (live sync)</li><li>Profisee 2026.R1 deployed</li><li>First 10k Customer records resolved</li><li>Gold Customer 360 (industry-standard schema)</li><li>Purview lineage flowing</li></ul>
+      </div>
+      <div class="phase">
+        <div class="ph-num">W3</div><div class="ph-name">Surface</div><div class="ph-when">Week 3 · live</div>
+        <ul><li>AI Search hybrid index over Gold</li><li>Neo4j AuraDB · key relationships</li><li>Document skillset over LaserFiche sample</li><li>Agent gateway tools wired (4 endpoints)</li><li>Permission-trimming validated end-to-end</li></ul>
+      </div>
+      <div class="phase">
+        <div class="ph-num">W4</div><div class="ph-name">First agent + demo</div><div class="ph-when">Week 4 · demo</div>
+        <ul><li>Lua Customer 360 agent on Foundry</li><li>End-to-end query through the agent gateway</li><li>Lineage shown to source · auditable</li><li><strong>Executive demo · go/no-go gate</strong></li><li>Production roadmap signed</li></ul>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:20px">
+      <div class="pillrow" style="justify-content:space-between">
+        <span class="pill brand">W1 · Foundations stood up</span>
+        <span class="pill brand">W2 · Data resolved</span>
+        <span class="pill brand">W3 · Gateway live</span>
+        <span class="pill brand">W4 · First agent demo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · VALUE (was 17) -->
+  <section class="slide" data-title="The value · CFO view">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">12 · The value · CFO view</span></div>
+      <span class="section-num">12 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Where the <span class="grad-text">investment pays back.</span></h2>
+    <p class="lead" style="margin:10px 0 22px">Master Data Management moves from blocker to enabler of every North Star.</p>
+
+    <div class="grid-3" style="flex:1;min-height:0">
+      <div class="value"><h4>Master data resolved</h4><div class="stat">90k <small>records</small></div><p>The 90,911 records in Financial Validation, Merges, Soft Delete and customer due-diligence converge to a single mastered customer base — once, and continuously.</p></div>
+      <div class="value"><h4>Time-to-answer</h4><div class="stat">days → <small>seconds</small></div><p>Cross-system questions that today take four reports and a spreadsheet become an agent prompt. Operating tempo accelerates measurably.</p></div>
+      <div class="value"><h4>Subsidiary onboarding</h4><div class="stat">months → <small>weeks</small></div><p>Industry-standard (OSCRE) Gold schema means a new subsidiary in Saudi Arabia, the Gulf or wider Middle East inherits the contract on day one. Integration becomes data wiring.</p></div>
+      <div class="value"><h4>Audit &amp; compliance</h4><div class="stat">100% <small>lineage</small></div><p>Every agent answer is traceable to the source record, the mapping decision, the steward who approved it. Financial Regulatory Authority, Personal Data Protection Law, Egyptian Exchange and carbon reports become queries.</p></div>
+      <div class="value"><h4>Cost of integration</h4><div class="stat">−40% <small>est.</small></div><p>One ingest path, one mapping layer, one retrieval surface replaces ad-hoc point-to-point integrations and shadow reconciliations.</p></div>
+      <div class="value"><h4>AI surface area</h4><div class="stat">1 gateway <small>· many agents</small></div><p>Every future Lua agent — yours or a partner's — plugs into the same governed surface. AI scales by adding agents, not by re-doing integration.</p></div>
+    </div>
+  </section>
+
+  <!-- 13 · GOVERNANCE (was 18) -->
+  <section class="slide" data-title="Governance">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">13 · Governance &amp; risk · built in, not bolted on</span></div>
+      <span class="section-num">13 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Enterprise-grade <span class="grad-text">by default.</span></h2>
+    <p class="lead" style="margin:10px 0 18px">Every layer follows current Microsoft reference patterns. Audit, security and risk sign off on configuration, not custom build.</p>
+
+    <div class="bp-grid">
+      <div><div class="bp-cat">Identity</div><h4>Entra ID for users, workloads, agents</h4><p>Managed identities. On-behalf-of flow for user-identity passthrough. Pre-authorized client lists at the agent gateway.</p></div>
+      <div><div class="bp-cat">Data security</div><h4>Document-level trimming at query time</h4><p>AI Search honours user permissions natively. Purview sensitivity labels propagate. SharePoint &amp; LaserFiche permissions pass through.</p></div>
+      <div><div class="bp-cat">Governance</div><h4>Purview as the control plane</h4><p>Catalog, classification, lineage. Source → Bronze → Silver → Gold → Index/Graph → Agent answer, end-to-end.</p></div>
+      <div><div class="bp-cat">Network</div><h4>Private by default</h4><p>Every Azure service runs behind private endpoints, hub-and-spoke virtual network. Customer-managed encryption keys in Key Vault. Microsoft Defender across the stack.</p></div>
+      <div><div class="bp-cat">AI safety</div><h4>Human-in-the-loop, by policy</h4><p>Master-data merges, customer due-diligence overrides, financial postings pause for steward approval. Security filters in the agent loop prevent data leakage.</p></div>
+      <div><div class="bp-cat">Industry alignment</div><h4>Industry-standard canonical model</h4><p>Property, Unit, Lease, Tenant, Asset, Transaction follow OSCRE — the 20-year global commercial real estate data standard.</p></div>
+    </div>
+  </section>
+
+  <!-- 14 · ASSUMPTIONS (was 2) -->
+  <section class="slide" data-title="Assumptions">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">14 · Assumptions · the basis of this proposal</span></div>
+      <span class="section-num">14 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>What we know. <span class="grad-text">What we still need to validate.</span></h2>
+    <p class="lead" style="margin:10px 0 20px">Built from the [CLIENT_NAME] Enterprise Blueprint and the Data Quality Validation summary shared by your team. The right column is the agenda for our discovery hour.</p>
+    <div class="assume-grid">
+      <div class="assume-col confirmed">
+        <div class="cat">Confirmed · from your materials</div>
+        <h3>What we know</h3>
+        <ul>
+          <li><div></div><div><strong>31 systems</strong> across the application landscape — Salesforce CRM (490+u), SAP (603+u), SuccessFactors (350u), MuleSoft, Power BI, LaserFiche, Archdesk, Azure OCR, CS Ticketing</div></li>
+          <li><div></div><div><strong>Six subsidiaries</strong> on heterogeneous stacks — SAFE, Touba, Theqa, Doors (Odoo), CHUM (CStack HR), Finishing (CStack ERP); CHUM 80% undocumented</div></li>
+          <li><div></div><div><strong>90,911 records require action</strong> — duplicates, invalid IDs, missing IDs, pending merges, soft-deletes, customer due-diligence defects</div></li>
+          <li><div></div><div><strong>Master Data Management rated 1 / 5</strong> in the blueprint — flagged as <em>"MDM blocks all North Stars · no system exists"</em></div></li>
+          <li><div></div><div><strong>Four strategic North Stars</strong> — Platform Company, Service Provider, Regional Expansion, Environmental-Social-Governance + Compliance &amp; Data Maturity</div></li>
+          <li><div></div><div><strong>AI-First is an explicit pillar</strong> — agentic workflows, AI copilot, document intelligence, predictive analytics</div></li>
+          <li><div></div><div><strong>Compliance scope</strong> includes Financial Regulatory Authority (FRA), Central Bank, Personal Data Protection Law (PDPL), carbon disclosures, Egyptian Exchange (EGX)</div></li>
+          <li><div></div><div><strong>Critical gaps</strong> already identified — Master Data Management, Identity &amp; Access, Data Governance, multi-entity finance, cyber security</div></li>
+        </ul>
+      </div>
+      <div class="assume-col assumed">
+        <div class="cat">Assumed · to validate in discovery</div>
+        <h3>What we still need to confirm</h3>
+        <ul>
+          <li><div></div><div><strong>Azure is the strategic cloud</strong> — source systems hosted on Azure, no multi-cloud constraint</div></li>
+          <li><div></div><div><strong>Source systems remain authoritative</strong> — no system migration in scope; this is a semantic layer above</div></li>
+          <li><div></div><div><strong>MuleSoft stays</strong> — coexists as event-emitter for flows already trusted in production</div></li>
+          <li><div></div><div><strong>Lua is the agent build surface</strong> — your team and partners deliver agents on the Lua framework</div></li>
+          <li><div></div><div><strong>Profisee is acceptable as Master Data Management partner</strong> — Microsoft-blessed; alternative is custom Azure Machine Learning at higher build risk</div></li>
+          <li><div></div><div><strong>Neo4j AuraDB on Azure</strong> preferred over Cosmos Gremlin (Microsoft now steers customers away for new builds)</div></li>
+          <li><div></div><div><strong>OSCRE Industry Data Model</strong> acceptable as canonical schema for Property / Unit / Lease / Tenant</div></li>
+          <li><div></div><div><strong>Initial agent domains</strong> — Customer, Property, Finance, People, Compliance; others follow in roadmap</div></li>
+          <li><div></div><div><strong>4-week sprint</strong> with executive demo at Week 4 is acceptable as the proof-of-value gate</div></li>
+          <li><div></div><div><strong>Human-in-the-loop required</strong> on master-data merges, customer due-diligence overrides, financial postings</div></li>
+          <li><div></div><div><strong>Saudi Arabia expansion is on your strategic roadmap</strong> — the canonical model is designed to travel when you're ready</div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 · NEXT STEPS (was 19) -->
+  <section class="slide" data-title="Next steps">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="eyebrow">15 · Next steps</span></div>
+      <span class="section-num">15 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Three things we'd like to <span class="grad-text">do together.</span></h2>
+    <p class="lead" style="margin:10px 0 22px">A focused hour, then a focused 4 weeks, then a working agent.</p>
+
+    <div class="grid-3" style="flex:1;min-height:0">
+      <div class="panel brand">
+        <div class="eyebrow">01 · Discovery hour</div>
+        <h4 style="margin-top:8px">Aligned in 60 minutes</h4>
+        <p style="font-size:14px">Walk this architecture with your stakeholders — IT, Data, Finance, Compliance. Validate the assumptions slide. Confirm canonical domains (Customer · Property · Unit · Lease).</p>
+      </div>
+      <div class="panel brand">
+        <div class="eyebrow">02 · 4-week sprint</div>
+        <h4 style="margin-top:8px">Foundations to first agent</h4>
+        <p style="font-size:14px">Week 1 lands the Azure foundation. Week 2 resolves the first Customer records. Week 3 stands up the agent gateway. Week 4 a working Lua agent — every week ends with a demonstrable artefact.</p>
+      </div>
+      <div class="panel brand">
+        <div class="eyebrow">03 · First agent live</div>
+        <h4 style="margin-top:8px">Week 4 demo</h4>
+        <p style="font-size:14px">A Lua-built Customer 360 agent answering cross-system questions through the agent gateway, with full Purview lineage. Demonstrable to executives. Defensible to auditors. Go/no-go gate at the end of week 4.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--border-2);display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:14px">
+        <img src="logo.png" alt="" style="width:36px;height:36px"/>
+        <div>
+          <div class="eyebrow">Lua · AI Agent Framework</div>
+          <h3 style="margin-top:2px">docs.heylua.ai</h3>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="eyebrow" style="color:var(--text-muted)">Prepared for</div>
+        <h3 style="margin-top:2px">[CLIENT_CONTACT] · [CLIENT_NAME] · May 2026</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== APPENDIX · ARCHITECTURE DEEP-DIVE ====== -->
+
+  <!-- 16 · APPENDIX · SOURCES + INGEST (was 6) -->
+  <section class="slide" data-title="Sources + Ingest" data-appendix="true">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="appendix-tag">Appendix</span><span class="eyebrow">16 · Sources &amp; ingest</span></div>
+      <span class="section-num">16 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Nothing migrates. <span class="grad-text">Everything is read.</span></h2>
+    <p class="lead" style="margin:10px 0 20px">Source systems remain authoritative for transactions. We add a governed read-side semantic layer above them.</p>
+
+    <h4 style="margin-bottom:8px;color:var(--text-3);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600">Source systems · stay where they are</h4>
+    <div class="sysgrid">
+      <div class="syschip brand"><span class="t">CRM · 490+ users</span>Salesforce CRM</div>
+      <div class="syschip brand"><span class="t">ERP · 603+ users</span>SAP S/4 · MM · FICO · PS</div>
+      <div class="syschip brand"><span class="t">People · 350 users</span>SuccessFactors</div>
+      <div class="syschip brand"><span class="t">Integration · existing</span>MuleSoft (preserved)</div>
+      <div class="syschip"><span class="t">Subsidiary ERP</span>Doors · Odoo</div>
+      <div class="syschip"><span class="t">Subsidiary HR</span>CHUM · CStack HR</div>
+      <div class="syschip"><span class="t">Subsidiary ERP</span>Finishing · CStack</div>
+      <div class="syschip"><span class="t">Platforms</span>SAFE · Touba · Theqa</div>
+      <div class="syschip"><span class="t">ECM · documents</span>LaserFiche</div>
+      <div class="syschip"><span class="t">Tendering</span>Archdesk</div>
+      <div class="syschip"><span class="t">Doc AI</span>Azure OCR</div>
+      <div class="syschip"><span class="t">Service</span>CS Ticketing</div>
+    </div>
+
+    <h4 style="margin-top:24px;margin-bottom:8px;color:var(--text-3);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600">Ingestion patterns · Microsoft-current</h4>
+    <div class="ingest">
+      <div><div class="il">SAP</div><div class="ic">Live-sync connector (Operational Data Provisioning)</div><div class="id">Certified Microsoft connector. Live delta extraction from S/4HANA and earlier SAP versions.</div></div>
+      <div><div class="il">Salesforce</div><div class="ic">V2 connector · Bulk API 2.0</div><div class="id">OAuth-secured, generally available in Azure Data Factory &amp; Fabric. V1 in removal stage.</div></div>
+      <div><div class="il">Subsidiary ERPs &amp; documents</div><div class="ic">Self-hosted runtime · REST · ODBC</div><div class="id">Odoo, CStack, LaserFiche reached via Microsoft's self-hosted integration runtime. MuleSoft retained as event-emitter.</div></div>
+    </div>
+  </section>
+
+  <!-- 17 · APPENDIX · FABRIC MEDALLION (was 7) -->
+  <section class="slide" data-title="Fabric · Medallion" data-appendix="true">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="appendix-tag">Appendix</span><span class="eyebrow">17 · The unified lake</span></div>
+      <span class="section-num">17 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>One lake. Three zones. <span class="grad-text">One contract.</span></h2>
+    <p class="lead" style="margin:10px 0 14px">Microsoft Fabric on OneLake is the strategic landing zone. Bronze · Silver · Gold is the Microsoft reference pattern — and Fabric's Materialized Lake Views make the refresh story automatic in 2026.</p>
+
+    <div class="medallion">
+      <div class="med bronze">
+        <div class="lab">Bronze</div>
+        <h4>Raw landings</h4>
+        <p>Source-shaped mirrors. SAP deltas, Salesforce objects, Odoo extracts, CStack tables, document binaries. Delta Parquet, partitioned by source. No transformations.</p>
+      </div>
+      <div class="med silver">
+        <div class="lab">Silver</div>
+        <h4>AI-resolved · canonical</h4>
+        <p>Cleansed, deduplicated, mastered. <strong>Profisee 2026.R1 AI Similarity Matching</strong> resolves duplicates fuzzy strings cannot. Survivorship picks golden records. Stewards approve edge cases.</p>
+      </div>
+      <div class="med gold">
+        <div class="lab">Gold</div>
+        <h4>Business-ready 360s</h4>
+        <p>Customer 360, Property 360, Unit 360, Lease 360, Contract 360. Aligned to <strong>OSCRE Industry Data Model</strong>. Consumable by Power BI Direct Lake, AI Search indexers, the graph builder.</p>
+      </div>
+    </div>
+
+    <div class="panel brand" style="margin-top:20px;display:flex;gap:24px;align-items:center">
+      <div style="flex:1">
+        <div class="eyebrow">Why Fabric, not Synapse</div>
+        <p style="margin:8px 0 0;font-size:14px">Microsoft has consolidated its data strategy on Fabric for new workloads. Synapse Dedicated Pools are de-emphasised. Direct Lake gives Power BI sub-second performance on Gold without copy. Databricks-on-Azure can read OneLake natively via Unity Catalog.</p>
+      </div>
+      <div class="pillrow" style="flex-direction:column;align-items:flex-end;gap:6px">
+        <span class="pill brand">Fabric F64 capacity at pilot</span>
+        <span class="pill brand">Materialized Lake Views</span>
+        <span class="pill brand">Direct Lake to Power BI</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 · APPENDIX · AI MAPPING (was 8) -->
+  <section class="slide" data-title="AI Mapping" data-appendix="true">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="appendix-tag">Appendix</span><span class="eyebrow">18 · AI mapping — entity resolution</span></div>
+      <span class="section-num">18 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Records that <em>mean</em> the same thing. <span class="grad-text">Not records that look the same.</span></h2>
+    <p class="lead" style="margin:10px 0 22px">In February 2026 Profisee shipped AI Similarity Matching using vector embeddings. Fuzzy strings could not solve your 33,500 broken records. This can.</p>
+
+    <div class="split" style="gap:28px">
+      <div class="panel">
+        <div class="eyebrow">The problem · before</div>
+        <h3 style="margin:8px 0 12px">Why 33,500 records resist deterministic matching</h3>
+        <ul style="margin:0;padding:0;list-style:none">
+          <li style="padding:10px 0;border-bottom:1px solid var(--border)"><strong>Transliteration drift</strong> — "محمد", "Mohammed", "Mohamed", "Mohd" map to the same person; exact-string fails</li>
+          <li style="padding:10px 0;border-bottom:1px solid var(--border)"><strong>Address normalisation</strong> — "Bldg 7", "Tower 7", "برج ٧", "Block 7 Unit A" — all the same unit</li>
+          <li style="padding:10px 0;border-bottom:1px solid var(--border)"><strong>Merged-entity history</strong> — subsidiaries acquired with their own customer bases collide on national ID</li>
+          <li style="padding:10px 0"><strong>Field-level semantic drift</strong> — SAP "Customer", Salesforce "Account", Odoo "Partner"</li>
+        </ul>
+      </div>
+      <div class="panel brand">
+        <div class="eyebrow">The solution · 2026</div>
+        <h3 style="margin:8px 0 12px">Three Microsoft-supported techniques, layered</h3>
+        <ul style="margin:0;padding:0;list-style:none">
+          <li style="padding:10px 0;border-bottom:1px solid var(--border)"><strong>Vector-embedding entity resolution</strong> — Profisee 2026.R1 generates embeddings per record; cosine similarity catches semantic duplicates</li>
+          <li style="padding:10px 0;border-bottom:1px solid var(--border)"><strong>Azure OpenAI semantic field mapping</strong> — automated mapping of source attributes to canonical OSCRE schema</li>
+          <li style="padding:10px 0;border-bottom:1px solid var(--border)"><strong>Profisee Aisey AI agents</strong> — autonomous data-quality and enrichment with full audit trail</li>
+          <li style="padding:10px 0"><strong>Steward workflow</strong> — ambiguous cases route to a human, never auto-merged</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 · APPENDIX · AI SEARCH + GRAPH (was 10) -->
+  <section class="slide" data-title="Hybrid retrieval" data-appendix="true">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="appendix-tag">Appendix</span><span class="eyebrow">19 · Hybrid retrieval — search + graph</span></div>
+      <span class="section-num">19 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Two surfaces. One substrate. <span class="grad-text">Three-times accuracy.</span></h2>
+    <p class="lead" style="margin:10px 0 22px">Vector search excels at similar text. A knowledge graph excels at traversing relationships. Microsoft GraphRAG combines them — benchmarking 3× accuracy gains on connected-evidence questions.</p>
+
+    <div class="split" style="gap:28px">
+      <div class="panel brand">
+        <div class="eyebrow">Surface A</div>
+        <h3 style="margin:8px 0 10px">Azure AI Search</h3>
+        <p><strong>Hybrid retrieval</strong> — exact keyword match, semantic (meaning-based) match, and a final re-ranker, in one query.</p>
+        <p><strong>Integrated vectorization</strong> — chunking and embedding inside the indexer. No external ETL.</p>
+        <p><strong>Skillsets</strong> over LaserFiche, Archdesk and Azure OCR — extract entities, key phrases, relationships from your document estate.</p>
+        <p style="margin:0"><strong>Native permission-trimming via Entra ID</strong> — every result respects the caller's permissions. New in 2025.</p>
+      </div>
+      <div class="panel brand">
+        <div class="eyebrow">Surface B</div>
+        <h3 style="margin:8px 0 10px">Knowledge graph + GraphRAG</h3>
+        <p><strong>Relationships as first-class citizens</strong> — Customer ↔ Unit ↔ Property ↔ Contract ↔ Subsidiary, with provenance per edge.</p>
+        <p><strong>Microsoft GraphRAG</strong> — community detection and hierarchical summarisation; answers "global" questions vector search cannot.</p>
+        <p><strong>Neo4j AuraDB on Azure</strong> — Microsoft Agent Framework has a first-class Neo4j GraphRAG context provider.</p>
+        <p style="margin:0"><strong>Alternative</strong> — Cosmos DB for NoSQL using Microsoft's AI Knowledge Graph pattern.</p>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:20px;text-align:center">
+      <p style="margin:0;font-size:14px;color:var(--text-2)">Local context from vector · global synthesis from graph · <strong>up to 3× accuracy</strong> on cross-evidence questions <span class="mono" style="color:var(--text-muted)">(Microsoft Research · 54.2% vs 16.7% baseline RAG)</span></p>
+    </div>
+  </section>
+
+  <!-- 20 · APPENDIX · AGENT GATEWAY (was 11) -->
+  <section class="slide" data-title="Agent gateway" data-appendix="true">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="appendix-tag">Appendix</span><span class="eyebrow">20 · The one endpoint — agent gateway (Model Context Protocol)</span></div>
+      <span class="section-num">20 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>One agent gateway. <span class="grad-text">Every agent. Every system.</span></h2>
+    <p class="lead" style="margin:10px 0 22px">Microsoft made this an officially supported pattern in 2025 — Azure API Management with native Model Context Protocol support (the open standard for how AI agents call tools). We compose with first-class tooling, not bespoke gateways.</p>
+
+    <div class="grid-2" style="gap:32px">
+      <div>
+        <h4 style="margin-bottom:8px">Why a single endpoint</h4>
+        <p>Every agent — built by your team, partners, or off-the-shelf — speaks one protocol to one endpoint, with one identity, one audit log, one policy regime. Adding a data source means registering a tool, not rewriting every agent.</p>
+        <h4 style="margin:18px 0 8px">What it enforces</h4>
+        <p style="margin:0">OAuth 2.1 + Entra ID for authentication. On-behalf-of so the user's permissions flow through to AI Search and the graph. Per-tool rate limits. Per-agent quotas. Full observability. Private network access only.</p>
+      </div>
+      <div>
+        <h4 style="margin-bottom:8px">The four tools exposed</h4>
+        <div class="mcp-tools">
+          <div class="tool"><div class="tn">search_unified</div><div class="td">Hybrid retrieval over AI Search · permission-trimmed</div></div>
+          <div class="tool"><div class="tn">query_graph</div><div class="td">Cypher / GraphRAG over knowledge graph</div></div>
+          <div class="tool"><div class="tn">resolve_entity</div><div class="td">Profisee golden-record lookup</div></div>
+          <div class="tool"><div class="tn">get_lineage</div><div class="td">Purview-backed source &amp; audit trace</div></div>
+        </div>
+        <div class="pillrow" style="margin-top:18px">
+          <span class="pill brand">Azure API Management</span>
+          <span class="pill brand">API Center registry</span>
+          <span class="pill brand">OAuth 2.1 · on-behalf-of</span>
+          <span class="pill brand">Private endpoint</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21 · APPENDIX · LUA AGENTS (was 12) -->
+  <section class="slide" data-title="Agents · Lua" data-appendix="true">
+    <div class="slide-head">
+      <div class="left"><img src="logo.png" alt=""/><span class="appendix-tag">Appendix</span><span class="eyebrow">21 · Agents on the Lua framework</span></div>
+      <span class="section-num">21 / 21</span>
+    </div>
+    <hr class="grad-line"/>
+    <h2>Built once. Deployed everywhere. <span class="grad-text">Owned by your team.</span></h2>
+    <p class="lead" style="margin:10px 0 18px">The Azure platform is the substrate. The Lua framework is how your team — and partners — build agents on it. Every agent consumes the agent gateway. Add a system, every agent gets it.</p>
+
+    <div class="agents">
+      <div class="agent">
+        <div class="nm">Property Agent</div>
+        <div class="ds">Land · master plan · construction · snagging · contractors</div>
+        <div class="ex">"Which units in El Shorouk are 90+ days past handover SLA?"</div>
+      </div>
+      <div class="agent">
+        <div class="nm">Customer Agent</div>
+        <div class="ds">360 view · due-diligence · sales pipeline · service history</div>
+        <div class="ex">"Resolve duplicates for 'Ahmed M.' across SAP and SF."</div>
+      </div>
+      <div class="agent">
+        <div class="nm">Finance Agent</div>
+        <div class="ds">Multi-entity close · cash flow · subsidiary consolidation</div>
+        <div class="ex">"Consolidated revenue by subsidiary for Q1, with FX bridge."</div>
+      </div>
+      <div class="agent">
+        <div class="nm">People</div>
+        <div class="ds">SuccessFactors + CStack HR unified · talent · payroll</div>
+        <div class="ex">"Open requisitions in CHUM with safety-certification needs?"</div>
+      </div>
+      <div class="agent">
+        <div class="nm">Compliance</div>
+        <div class="ds">Financial Regulatory Authority · Personal Data Protection · Egyptian Exchange · ESG · customer due-diligence · carbon disclosures</div>
+        <div class="ex">"Generate Personal Data Protection Law impact report for last quarter."</div>
+      </div>
+    </div>
+
+    <div class="panel brand" style="margin-top:24px">
+      <div class="grid-2" style="align-items:center;gap:24px">
+        <div>
+          <h4 style="margin-bottom:6px">Why the Lua framework</h4>
+          <p style="margin:0;font-size:14px">Declarative agent definition. Version control. Single-command deploy to Azure AI Foundry or App Service. Native agent-gateway consumption. End-to-end observability. Your Centre of Excellence owns the framework after handover.</p>
+        </div>
+        <div class="pillrow" style="justify-content:flex-end">
+          <span class="pill brand">Declarative agents</span>
+          <span class="pill brand">Gateway-first tooling</span>
+          <span class="pill brand">Foundry deploy</span>
+          <span class="pill brand">CoE-ready</span>
+        </div>
+      </div>
+      <hr style="border:0;border-top:1px solid var(--border);margin:18px 0"/>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">
+        <div>
+          <div class="eyebrow" style="margin-bottom:4px">Reaches users where they already are</div>
+          <p style="margin:0;font-size:13.5px">Every Lua agent is multi-modal (voice · image · text) and multi-channel. Same agent, same audit trail, any surface — no rebuild per channel.</p>
+        </div>
+        <div class="pillrow">
+          <span class="pill brand dot">WhatsApp</span>
+          <span class="pill dot">Slack</span>
+          <span class="pill brand dot">Voice</span>
+          <span class="pill dot">Email</span>
+          <span class="pill brand dot">Web chat</span>
+          <span class="pill dot">SMS</span>
+          <span class="pill brand dot">Custom channels</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    const deck = document.getElementById('deck');
+    const slides = Array.from(deck.querySelectorAll('.slide'));
+    const counter = document.getElementById('slideCounter');
+    const bar = document.getElementById('progressBar');
+    const help = document.getElementById('helpOverlay');
+    const overview = document.getElementById('overview');
+    const ovGridMain = document.getElementById('ovGridMain');
+    const ovGridAppendix = document.getElementById('ovGridAppendix');
+    const total = slides.length;
+    let current = 0;
+
+    slides.forEach((s,i)=>{
+      const isAppendix = s.dataset.appendix === 'true';
+      const c=document.createElement('div');
+      c.className='ov-card' + (isAppendix ? ' appendix' : '');
+      c.innerHTML='<div class="ov-num">'+String(i+1).padStart(2,'0')+' / '+String(total).padStart(2,'0')+'</div>'+
+        '<div class="ov-title">'+(s.dataset.title||('Slide '+(i+1)))+'</div>';
+      c.onclick=()=>{ goto(i); overview.classList.remove('show'); };
+      (isAppendix ? ovGridAppendix : ovGridMain).appendChild(c);
+    });
+
+    function pad(n){return String(n).padStart(2,'0')}
+
+    function getScene(slide){
+      return slide ? slide.querySelector('[data-steps]') : null;
+    }
+
+    function applyStage(scene){
+      if(!scene) return;
+      const step = parseInt(scene.dataset.step||'1',10);
+      const max = parseInt(scene.dataset.steps||'1',10);
+      // Reveal/active classes on data-stage elements
+      scene.querySelectorAll('[data-stage]').forEach(el=>{
+        const s = parseInt(el.dataset.stage,10);
+        el.classList.toggle('on', s <= step);
+        el.classList.toggle('active', s === step);
+        el.classList.toggle('passed', s < step);
+      });
+      // Animation re-trigger
+      scene.querySelectorAll('.typewrite,.thinkpill,.tcall,.answer,.bg-actions li,.evtpulse').forEach(el=>{
+        el.style.animation='none'; void el.offsetHeight; el.style.animation='';
+      });
+      // Step progress dots
+      const dots = scene.querySelectorAll('.step-progress .sp-dot');
+      dots.forEach((d,i)=>d.classList.toggle('on', i < step));
+      // Hint text
+      const hint = scene.querySelector('.sp-hint');
+      if(hint){ hint.textContent = step >= max ? '✓ end of build — → next slide' : '→ click to advance ('+step+'/'+max+')'; }
+    }
+
+    function render(){
+      slides.forEach((s,i)=>{
+        s.classList.remove('active','prev');
+        if(i===current) s.classList.add('active');
+        else if(i<current) s.classList.add('prev');
+      });
+      const counterText = pad(current+1)+' / '+pad(total);
+      counter.textContent=counterText;
+      const mnavCount = document.getElementById('mnavCount');
+      if(mnavCount) mnavCount.textContent = counterText;
+      bar.style.width=((current+1)/total*100)+'%';
+      const allCards = [...ovGridMain.children, ...ovGridAppendix.children];
+      allCards.forEach((c,i)=>c.classList.toggle('current',i===current));
+      // Reset & apply step on the current scene
+      const scene = getScene(slides[current]);
+      if(scene){
+        if(!scene.dataset.step) scene.dataset.step = '1';
+        applyStage(scene);
+      }
+      // Mobile nav bar boundary state
+      const mnavPrev = document.getElementById('mnavPrev');
+      const mnavNext = document.getElementById('mnavNext');
+      const step = scene ? parseInt(scene.dataset.step||'1',10) : 1;
+      const maxStep = scene ? parseInt(scene.dataset.steps||'1',10) : 1;
+      const atStart = current===0 && step===1;
+      const atEnd   = current===total-1 && step===maxStep;
+      if(mnavPrev) mnavPrev.classList.toggle('disabled', atStart);
+      if(mnavNext) mnavNext.classList.toggle('disabled', atEnd);
+      try{ history.replaceState(null,'','#'+(current+1)); }catch(e){}
+    }
+
+    function isMobile(){ return window.matchMedia('(max-width: 900px)').matches }
+    function scrollStageIntoView(scene, stage){
+      if(!isMobile()) return;
+      const el = scene.querySelector('[data-stage="'+stage+'"]');
+      if(!el) return;
+      // Slight delay so the .on class transition has begun rendering before we scroll
+      requestAnimationFrame(()=>{
+        el.scrollIntoView({behavior:'smooth', block:'center'});
+      });
+    }
+
+    function next(){
+      const scene = getScene(slides[current]);
+      if(scene){
+        const step = parseInt(scene.dataset.step||'1',10);
+        const max = parseInt(scene.dataset.steps||'1',10);
+        if(step < max){
+          const newStep = step+1;
+          scene.dataset.step = newStep;
+          applyStage(scene);
+          scrollStageIntoView(scene, newStep);
+          return;
+        }
+      }
+      if(current<total-1){
+        // moving forward: reset next slide's scene to 1
+        const ns = getScene(slides[current+1]);
+        if(ns) ns.dataset.step = '1';
+        current++;
+        render();
+        // scroll to top of the new slide on mobile
+        if(isMobile()) slides[current].scrollTo({top:0, behavior:'instant'});
+      }
+    }
+    function prev(){
+      const scene = getScene(slides[current]);
+      if(scene){
+        const step = parseInt(scene.dataset.step||'1',10);
+        if(step > 1){
+          const newStep = step-1;
+          scene.dataset.step = newStep;
+          applyStage(scene);
+          scrollStageIntoView(scene, newStep);
+          return;
+        }
+      }
+      if(current>0){
+        // moving back: show prior animated slide fully built (at max step)
+        const ps = getScene(slides[current-1]);
+        if(ps){ ps.dataset.step = ps.dataset.steps || '1'; }
+        current--;
+        render();
+        if(isMobile()) slides[current].scrollTo({top:0, behavior:'instant'});
+      }
+    }
+    function goto(i){
+      if(i<0||i>=total) return;
+      const scene = getScene(slides[i]);
+      if(scene) scene.dataset.step = '1';
+      current=i;
+      render();
+    }
+    window.next=next; window.prev=prev;
+
+    document.addEventListener('keydown',e=>{
+      if(e.target&&/INPUT|TEXTAREA/.test(e.target.tagName)) return;
+      const k=e.key;
+      if(help.classList.contains('show')&&k!=='?'){help.classList.remove('show');return;}
+      if(overview.classList.contains('show')&&k==='Escape'){overview.classList.remove('show');return;}
+      if(k==='ArrowRight'||k===' '||k==='PageDown'||k==='n'||k==='j'){e.preventDefault();next();}
+      else if(k==='ArrowLeft'||k==='PageUp'||k==='p'||k==='k'){e.preventDefault();prev();}
+      else if(k==='Home'){e.preventDefault();goto(0);}
+      else if(k==='End'){e.preventDefault();goto(total-1);}
+      else if(k==='o'||k==='O'){overview.classList.toggle('show');}
+      else if(k==='Escape'){overview.classList.remove('show');help.classList.remove('show');}
+      else if(k==='f'||k==='F'){
+        if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+        else document.exitFullscreen().catch(()=>{});
+      }
+      else if(k==='?'){help.classList.toggle('show');}
+      else if(k==='P'){window.print();}
+      else if(/^[1-9]$/.test(k)){const idx=parseInt(k,10)-1;if(idx<total) goto(idx);}
+    });
+
+    let tx=null,ty=null;
+    document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].clientX;ty=e.changedTouches[0].clientY;},{passive:true});
+    document.addEventListener('touchend',e=>{
+      if(tx===null||ty===null) return;
+      const dx=e.changedTouches[0].clientX-tx;
+      const dy=e.changedTouches[0].clientY-ty;
+      // Only treat as a slide swipe if motion is more horizontal than vertical
+      // (vertical scrolling inside a slide stays as scrolling)
+      if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.4){if(dx<0) next(); else prev();}
+      tx=null;ty=null;
+    },{passive:true});
+
+    const hash=parseInt((location.hash||'').replace('#',''),10);
+    if(hash&&hash>=1&&hash<=total){current=hash-1;}
+    render();
+
+    document.getElementById('arrowLeft').classList.add('show');
+    document.getElementById('arrowRight').classList.add('show');
+    setTimeout(()=>{
+      document.getElementById('arrowLeft').classList.remove('show');
+      document.getElementById('arrowRight').classList.remove('show');
+    },2200);
+  })();
+</script>
+
+</body>
+</html>
